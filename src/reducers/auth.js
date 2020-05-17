@@ -4,14 +4,14 @@ const auth = (state = {}, action) => {
       return {
         ...state,
         user: (action.auth).user,
-        isLogged: (action.auth).isLogged
-      }
+        isLogged: (action.auth).isLogged,
+      };
     case 'SET LOGOUT':
       return {
         ...state,
         isLogged: false,
-        user: ''
-      }
+        user: '',
+      };
     default:
       return state;
   }
