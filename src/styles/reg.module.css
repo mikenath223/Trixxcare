@@ -82,13 +82,10 @@ input {
 }
 
 .but {
+  margin-top: 20px;
   margin-bottom: 100px;
-  border-radius: 20px;
   border: none;
   outline: none;
-  background-color: rgb(0, 89, 255);
-  height: 35px;
-  padding: 2px 15px;
   color: #fff;
   font-size: 25px;
   font-weight: 700;
