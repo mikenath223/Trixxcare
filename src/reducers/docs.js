@@ -1,4 +1,4 @@
-const docs = (state = {}, action) => {
+const docs = (state = [], action) => {
   switch (action.type) {
     case 'SET DOCS':
       return action.docs;
