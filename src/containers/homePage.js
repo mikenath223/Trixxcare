@@ -2,229 +2,386 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SETLOGIN } from '../actions/index';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import SmartSlider from 'react-smart-slider';
+import { SETLOGIN, SETLOGOUT, SETSIGNIN } from '../actions/index';
+import Singin from '../components/singin';
+import Singup from '../components/singup';
+import { showRegister, showSignin, slideHeight } from './404/domlist';
+import style from '../styles/home.module.css';
 
-
-// "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODkyOTkxMjYsInN1YiI6MX0.nEmWU4froh_OXf6r4Tq4oa8OaMnfPPR2phlbc4JqSEU"
 
 const mapDispatchToProps = dispatch => ({
   setAuth: stat => dispatch(SETLOGIN(stat)),
-})
+  setLogout: act => dispatch(SETLOGOUT(act)),
+  triggerShowSignin: stat => dispatch(SETSIGNIN(stat)),
+});
 
 const mapStateToProps = state => ({
   auth: state.auth,
-})
+  trigger: state.trigger,
+});
 
-const HomePage = ({ setAuth, auth }) => {
+const HomePage = ({
+  setAuth, auth, setLogout, trigger, triggerShowSignin,
+}) => {
   const [signinCred, setSigninCred] = useState({ username: '', pass: '' });
   const [registerCred, setRegisterCred] = useState({ username: '', pass: '', confirmPass: '' });
-  const [notLogged, setnotLogged] = useState(false)
+  const [load, setLoad] = useState(false);
+  const [alert, setAlert] = useState({ load: false, message: '' });
 
-  const showRegister = () => {
-    const form = document.querySelector('.reg-form');
-    const signModal = document.querySelector('.reg-modal')
-    showRegisterForm()
-    signModal.style.visibility = 'visible';
-    form.classList.add('translate');
+
+  const handleLogout = () => {
+    setLogout();
+    localStorage.removeItem('tok');
   };
 
-  const showSignin = () => {
-    const form = document.querySelector('.signin-form');
-    const regModal = document.querySelector('.signin-modal')
-    showRegisterForm()
-    showSigninForm()
-    regModal.style.visibility = 'visible';
-    form.classList.add('translate');
+  const handleCancel = () => {
+    setAlert({ load: false, message: '' });
   };
 
-  const showRegisterForm = () => {
-    const form = document.querySelector('.reg-form');
-    const regModal = document.querySelector('.reg-modal')
-
-    document.querySelector('.close-reg').onclick = () => {
-      regModal.style.visibility = 'hidden';
-      form.classList.remove('translate');
-    };
-    window.onclick = e => {
-      const modals = document.querySelectorAll('.modal');
-      const forms = document.querySelectorAll('.form');
-      modals.forEach(el => {
-        if (e.target === el) {
-          el.style.visibility = 'hidden';
-          forms.forEach(fr => fr.classList.remove('translate'))
-        }
-      })
-    };
+  const handleConfirmed = () => {
+    setAlert({ load: false, message: '' });
   };
 
-  const showSigninForm = () => {
-    const form = document.querySelector('.signin-form');
-    const signModal = document.querySelector('.signin-modal')
-
-    document.querySelector('.close-sign').onclick = () => {
-      signModal.style.visibility = 'hidden';
-      form.classList.remove('translate');
-    };
-  };
-
-  const handleRegSubmit = (e) => {
-    e.preventDefault();
-
-    fetch('https://trixxcare.herokuapp.com/api/users', {
-      method: "POST",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "username": registerCred.username,
-        "password": registerCred.pass
-      })
-    })
-      .then(tok => {
-        if (tok.message) {
-          return console.log(tok.message)
-        }
-        console.log(tok)
-        setAuth({ user: registerCred.username });
-        getTok();
-      })
-      .catch(error => console.log(error))
-  }
-
-
-  const getTok = () => {
-    console.log('runs')
-    const username = registerCred.username;
-    const pass = registerCred.pass;
-
+  const getTok = (username, pass) => {
     fetch('https://trixxcare.herokuapp.com/api/user_token', {
-      method: "POST",
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         auth: {
-          username: username,
-          password: pass
-        }
-      })
+          username,
+          password: pass,
+        },
+      }),
     })
-      .then(res => res.json())
-      .then(tok => {
-        localStorage.setItem('tok', JSON.stringify(tok.jwt))
-        setAuth({ isLogged: true })
-        console.log(auth);
-      })
-      .catch(error => console.log(error))
+      .then(res => {
+        if (res.status === 201) {
+          res.json().then(tok => {
+            localStorage.setItem('tok', JSON.stringify(tok.jwt));
+            setAuth({ user: username, isLogged: true });
+            setLoad(false);
+            const modals = document.querySelectorAll('.modal');
+            const forms = document.querySelectorAll('.form');
+            forms.forEach(el => {
+              const elem = el;
+              elem.classList.remove('translate');
+              return '';
+            });
+            modals.forEach(el => {
+              const elem = el;
+              elem.style.visibility = 'hidden';
+              return '';
+            });
+            triggerShowSignin({ show: false });
+          });
+        }
+      }).catch(() => {
+        setAlert(prevState => ({
+          ...prevState,
+          message: 'Username or password is incorrect!',
+          load: true,
+        }));
+        setLoad(false);
+      });
   };
 
-  const handleSigninSubmit = (e) => {
+
+  const handleRegSubmit = e => {
     e.preventDefault();
-  }
+    setLoad(true);
+    fetch('https://trixxcare.herokuapp.com/api/users', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: registerCred.username,
+        password: registerCred.pass,
+      }),
+    })
+      .then(res => {
+        if (res.status !== 204) {
+          res.json().then(rep => {
+            setAlert(prevState => ({
+              ...prevState,
+              message: rep.message,
+              load: true,
+              type: 'error',
+            }));
+          });
+        } else {
+          getTok(registerCred.username, registerCred.pass);
+        }
+      })
+      .catch(() => {
+        setAlert(prevState => ({
+          ...prevState,
+          message: 'Unexpected error!',
+          load: true,
+          type: 'error',
+        }));
+      });
+  };
+
   const handleRegChange = e => {
     const val = e.target.value;
     switch (e.target.name) {
       case ('username'):
-        setRegisterCred(prevState => {
-          return { ...prevState, username: val }
-        })
+        setRegisterCred(prevState => ({ ...prevState, username: val }));
         break;
       case ('password'):
-        setRegisterCred(prevState => {
-          return { ...prevState, pass: val }
-        })
+        setRegisterCred(prevState => ({ ...prevState, pass: val }));
         break;
       default:
-        setRegisterCred(prevState => {
-          return { ...prevState, confirmPass: val }
-        })
+        setRegisterCred(prevState => ({ ...prevState, confirmPass: val }));
         if (registerCred.pass !== val) {
-          e.target.setCustomValidity("Password values must match!");
+          e.target.setCustomValidity('Password values must match!');
         } else {
-          e.target.setCustomValidity("");
+          e.target.setCustomValidity('');
         }
         break;
     }
-  }
+  };
+
+  const handleSignInChange = e => {
+    const val = e.target.value;
+    switch (e.target.name) {
+      case ('username'):
+        setSigninCred(prevState => ({ ...prevState, username: val }));
+        break;
+      default:
+        setSigninCred(prevState => ({ ...prevState, pass: val }));
+        break;
+    }
+  };
+
+  const handleSigninSubmit = e => {
+    e.preventDefault();
+    setLoad(true);
+    getTok(signinCred.username, signinCred.pass);
+  };
 
 
   useEffect(() => {
-
     if (localStorage.tok) {
       fetch('https://trixxcare.herokuapp.com/api/currentuser', {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${JSON.parse(localStorage.tok).jwt}`,
-        }
+          Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
+        },
       }).then(res => res.json())
         .then(usr => {
-          console.log('runs')
-          usr = usr.user;
-          setAuth({ isLogged: true, user: usr });
-          setnotLogged(true);
+          setAuth({ isLogged: true, user: usr.user });
         })
-        .catch(error => console.log(error))
-
+        .catch(() => {
+          setAlert(prevState => ({
+            ...prevState,
+            message: 'Unexpected error!',
+            load: true,
+          }));
+        });
     }
+    slideHeight();
+    if (trigger.show) {
+      showSignin();
+    }
+  }, [setAuth, trigger.show]);
 
-  }, [setAuth])
+  const slidesArray = [
+    {
+      url: 'https://pluspng.com/img-png/png-hd-doctor--359.png',
+    },
+    {
+      url: 'https://www.freepnglogos.com/uploads/doctor-png/woman-doctor-png-transparent-woman-doctor-images-7.png',
+    },
+    {
+      url: 'https://i.ya-webdesign.com/images/black-doctor-png-1.png',
+    },
+    {
+      url: 'https://www.freepnglogos.com/uploads/doctor-png/png-woman-doctor-transparent-woman-doctor-images-17.png',
+    },
+  ];
 
 
   return (
-    <div>
+    <div className={style.container}>
       {
-        !notLogged ?
-          <div>
-            <button className="signin-but" onClick={showSignin}>SIGN IN</button>
-            <button className="reg-but" onClick={showRegister}>REGISTER</button>
-          </div>
-          : null
+        auth.isLogged
+          ? (
+            <div className={`${style.float} ${style.topbar}`}>
+              <p>
+                <img src="https://img.icons8.com/windows/30/000000/user-male-circle.png" alt="" />
+                {' '}
+                {auth.user.substring(0, 7)}
+              </p>
+              <button type="button" className={`${style.float} ${style.app}`}>
+                {' '}
+                <Link to="/appointments"> Appointments </Link>
+              </button>
+              <button type="button" onClick={handleLogout}>Logout</button>
+              {' '}
+
+            </div>
+          )
+          : (
+            <div className={`${style.float} ${style.registerButs}`}>
+              <button type="button" className={`${style.signinBut} btn btn-primary signin-but`} onClick={showSignin}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 172 172"
+                  style={{ fill: '#000000' }}
+                >
+                  <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+                    <path d="M0,172v-172h172v172z" fill="none" />
+                    <g fill="#ffffff"><path d="M51.6,10.75c-2.35009,0 -4.3,1.94991 -4.3,4.3v6.45h-15.05c-5.934,0 -10.75,4.816 -10.75,10.75v107.5c0,5.934 4.816,10.75 10.75,10.75h95.17949l-4.3,-4.3h-90.87949c-3.5475,0 -6.45,-2.9025 -6.45,-6.45v-88.15h120.4v71.52949l4.3,4.3v-95.17949c0,-5.934 -4.816,-10.75 -10.75,-10.75h-15.05v-6.45c0,-2.35009 -1.94991,-4.3 -4.3,-4.3h-4.3c-2.35009,0 -4.3,1.94991 -4.3,4.3v6.45h-51.6v-6.45c0,-2.35009 -1.94991,-4.3 -4.3,-4.3zM51.6,15.05h4.3v17.2h-4.3zM116.1,15.05h4.3v17.2h-4.3zM32.25,25.8h15.05v6.45c0,2.35009 1.94991,4.3 4.3,4.3h4.3c2.35009,0 4.3,-1.94991 4.3,-4.3v-6.45h51.6v6.45c0,2.35009 1.94991,4.3 4.3,4.3h4.3c2.35009,0 4.3,-1.94991 4.3,-4.3v-6.45h15.05c3.5475,0 6.45,2.9025 6.45,6.45v15.05h-120.4v-15.05c0,-3.5475 2.9025,-6.45 6.45,-6.45zM38.7,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM90.3,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM98.9,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM107.5,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM116.1,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM124.7,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM133.3,70.95c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM38.7,79.55c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM133.3,79.55c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM38.7,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM107.5,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM116.1,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM124.7,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM133.3,88.15c-0.88688,0 -1.65449,0.53165 -1.98203,1.30596c-0.10918,0.2581 -0.16797,0.54251 -0.16797,0.84404c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM93.0085,93.0085l10.61982,27.62666l25.56484,25.56484l4.3,4.3l17.15801,17.15381l1.15899,1.16318c2.064,2.0425 4.79467,3.18301 7.69717,3.18301c2.9025,0 5.63317,-1.14051 7.69717,-3.18301l1.6125,-1.63349c4.2355,-4.2355 4.2355,-11.13784 0,-15.37334l-1.16318,-1.15899l-17.15381,-17.15801l-4.3,-4.3l-25.2415,-25.24151l-0.32334,-0.32334zM105.16523,102.29297l11.96358,4.61074c-0.00812,0.04393 -0.00777,0.06829 -0.0168,0.11338c-0.17495,0.87429 -0.57417,1.80454 -0.94062,2.17099c-0.36645,0.36645 -1.3009,0.76568 -2.1752,0.94063c-0.87429,0.17495 -1.54111,0.17637 -1.54111,0.17637h-2.15v2.15c0,0 -0.00143,0.66682 -0.17637,1.54111c-0.17495,0.87429 -0.57417,1.80874 -0.94063,2.1752c-0.36645,0.36645 -1.29671,0.76568 -2.17099,0.94062c-0.04836,0.00968 -0.07476,0.00815 -0.12178,0.0168l-4.60234,-11.96358zM38.7,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM90.3,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM133.3,105.35c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM120.74853,109.84736l25.45147,25.45147l4.3,4.3l2.33897,2.33896l-10.90957,10.90957l-2.33057,-2.34736l-4.3,-4.3l-25.46406,-25.44727c0.81614,-0.3264 1.64699,-0.79455 2.39355,-1.54111c1.37935,-1.37935 1.8549,-3.0645 2.11641,-4.37139c0.04883,-0.24399 0.01827,-0.22261 0.05039,-0.44512c0.22251,-0.03221 0.20111,-0.00156 0.44512,-0.05039c1.30689,-0.26151 2.99204,-0.73706 4.37139,-2.11641c0.74269,-0.74269 1.2106,-1.56886 1.53691,-2.38096zM38.7,113.95c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM38.7,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM90.3,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM98.9,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM155.8792,144.97803l5.68154,5.68154l-10.90117,10.90537l-5.51778,-5.50517l-0.17217,-0.17217zM164.60098,153.6998l1.16318,1.16318c2.58,2.5585 2.58,6.73017 0,9.28867l-1.6125,1.6125c-1.247,1.247 -2.94584,1.87285 -4.64434,1.87285c-1.6985,0 -3.41884,-0.62585 -4.64434,-1.87285l-1.16318,-1.16318z" /></g>
+                  </g>
+                </svg>
+                SIGN IN
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 172 172"
+                  style={{ fill: '#000000' }}
+                >
+                  <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+                    <path d="M0,172v-172h172v172z" fill="none" />
+                    <path d="M86,161.68c-41.79691,0 -75.68,-33.88309 -75.68,-75.68v0c0,-41.79691 33.88309,-75.68 75.68,-75.68v0c41.79691,0 75.68,33.88309 75.68,75.68v0c0,41.79691 -33.88309,75.68 -75.68,75.68z" fill="#ffffff" />
+                    <g>
+                      <path d="M19.32313,86c0,-36.81875 29.85813,-66.67687 66.67688,-66.67687c36.81875,0 66.67688,29.85813 66.67688,66.67688c0,36.81875 -29.85812,66.67688 -66.67687,66.67688c-36.81875,0 -66.67687,-29.85812 -66.67687,-66.67687z" fill="#98bf0d" />
+                      <path d="M113.25125,81.10875c-10.105,-10.105 -20.21,-20.21 -30.315,-30.315c-7.2025,-7.2025 -18.32875,4.00437 -11.09938,11.23375c8.22375,8.22375 16.47438,16.4475 24.69812,24.69813c-8.25062,8.25062 -16.50125,16.50125 -24.75187,24.75188c-7.2025,7.2025 4.00438,18.32875 11.23375,11.09937c10.105,-10.105 20.21,-20.21 30.315,-30.315c3.01,-3.03688 2.92938,-8.14313 -0.08062,-11.15313z" fill="#ffffff" />
+                    </g>
+                  </g>
+                </svg>
+              </button>
+              <button type="button" className="btn btn-primary reg-but" onClick={showRegister}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 172 172"
+                  style={{ fill: '#000000' }}
+                >
+                  <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+                    <path d="M0,172v-172h172v172z" fill="none" />
+                    <g fill="#ffffff"><path d="M51.6,10.75c-2.35009,0 -4.3,1.94991 -4.3,4.3v6.45h-15.05c-5.934,0 -10.75,4.816 -10.75,10.75v107.5c0,5.934 4.816,10.75 10.75,10.75h95.17949l-4.3,-4.3h-90.87949c-3.5475,0 -6.45,-2.9025 -6.45,-6.45v-88.15h120.4v71.52949l4.3,4.3v-95.17949c0,-5.934 -4.816,-10.75 -10.75,-10.75h-15.05v-6.45c0,-2.35009 -1.94991,-4.3 -4.3,-4.3h-4.3c-2.35009,0 -4.3,1.94991 -4.3,4.3v6.45h-51.6v-6.45c0,-2.35009 -1.94991,-4.3 -4.3,-4.3zM51.6,15.05h4.3v17.2h-4.3zM116.1,15.05h4.3v17.2h-4.3zM32.25,25.8h15.05v6.45c0,2.35009 1.94991,4.3 4.3,4.3h4.3c2.35009,0 4.3,-1.94991 4.3,-4.3v-6.45h51.6v6.45c0,2.35009 1.94991,4.3 4.3,4.3h4.3c2.35009,0 4.3,-1.94991 4.3,-4.3v-6.45h15.05c3.5475,0 6.45,2.9025 6.45,6.45v15.05h-120.4v-15.05c0,-3.5475 2.9025,-6.45 6.45,-6.45zM38.7,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM90.3,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM98.9,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM107.5,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM116.1,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM124.7,70.95c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM133.3,70.95c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM38.7,79.55c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM133.3,79.55c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM38.7,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM107.5,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM116.1,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM124.7,88.15c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM133.3,88.15c-0.88688,0 -1.65449,0.53165 -1.98203,1.30596c-0.10918,0.2581 -0.16797,0.54251 -0.16797,0.84404c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM93.0085,93.0085l10.61982,27.62666l25.56484,25.56484l4.3,4.3l17.15801,17.15381l1.15899,1.16318c2.064,2.0425 4.79467,3.18301 7.69717,3.18301c2.9025,0 5.63317,-1.14051 7.69717,-3.18301l1.6125,-1.63349c4.2355,-4.2355 4.2355,-11.13784 0,-15.37334l-1.16318,-1.15899l-17.15381,-17.15801l-4.3,-4.3l-25.2415,-25.24151l-0.32334,-0.32334zM105.16523,102.29297l11.96358,4.61074c-0.00812,0.04393 -0.00777,0.06829 -0.0168,0.11338c-0.17495,0.87429 -0.57417,1.80454 -0.94062,2.17099c-0.36645,0.36645 -1.3009,0.76568 -2.1752,0.94063c-0.87429,0.17495 -1.54111,0.17637 -1.54111,0.17637h-2.15v2.15c0,0 -0.00143,0.66682 -0.17637,1.54111c-0.17495,0.87429 -0.57417,1.80874 -0.94063,2.1752c-0.36645,0.36645 -1.29671,0.76568 -2.17099,0.94062c-0.04836,0.00968 -0.07476,0.00815 -0.12178,0.0168l-4.60234,-11.96358zM38.7,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM90.3,105.35c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM133.3,105.35c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM120.74853,109.84736l25.45147,25.45147l4.3,4.3l2.33897,2.33896l-10.90957,10.90957l-2.33057,-2.34736l-4.3,-4.3l-25.46406,-25.44727c0.81614,-0.3264 1.64699,-0.79455 2.39355,-1.54111c1.37935,-1.37935 1.8549,-3.0645 2.11641,-4.37139c0.04883,-0.24399 0.01827,-0.22261 0.05039,-0.44512c0.22251,-0.03221 0.20111,-0.00156 0.44512,-0.05039c1.30689,-0.26151 2.99204,-0.73706 4.37139,-2.11641c0.74269,-0.74269 1.2106,-1.56886 1.53691,-2.38096zM38.7,113.95c-1.1825,0 -2.15,0.94385 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.20615 -0.9675,-2.15 -2.15,-2.15zM38.7,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM47.3,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM55.9,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM64.5,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM73.1,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM81.7,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM90.3,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM98.9,122.55c-1.1825,0 -2.15,0.9675 -2.15,2.15c0,1.1825 0.9675,2.15 2.15,2.15c1.1825,0 2.15,-0.9675 2.15,-2.15c0,-1.1825 -0.9675,-2.15 -2.15,-2.15zM155.8792,144.97803l5.68154,5.68154l-10.90117,10.90537l-5.51778,-5.50517l-0.17217,-0.17217zM164.60098,153.6998l1.16318,1.16318c2.58,2.5585 2.58,6.73017 0,9.28867l-1.6125,1.6125c-1.247,1.247 -2.94584,1.87285 -4.64434,1.87285c-1.6985,0 -3.41884,-0.62585 -4.64434,-1.87285l-1.16318,-1.16318z" /></g>
+                  </g>
+                </svg>
+                REGISTER
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 172 172"
+                  style={{ fill: '#000000' }}
+                >
+                  <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+                    <path d="M0,172v-172h172v172z" fill="none" />
+                    <path d="M86,161.68c-41.79691,0 -75.68,-33.88309 -75.68,-75.68v0c0,-41.79691 33.88309,-75.68 75.68,-75.68v0c41.79691,0 75.68,33.88309 75.68,75.68v0c0,41.79691 -33.88309,75.68 -75.68,75.68z" fill="#ffffff" />
+                    <g>
+                      <path d="M19.32313,86c0,-36.81875 29.85813,-66.67687 66.67688,-66.67687c36.81875,0 66.67688,29.85813 66.67688,66.67688c0,36.81875 -29.85812,66.67688 -66.67687,66.67688c-36.81875,0 -66.67687,-29.85812 -66.67687,-66.67687z" fill="#98bf0d" />
+                      <path d="M113.25125,81.10875c-10.105,-10.105 -20.21,-20.21 -30.315,-30.315c-7.2025,-7.2025 -18.32875,4.00437 -11.09938,11.23375c8.22375,8.22375 16.47438,16.4475 24.69812,24.69813c-8.25062,8.25062 -16.50125,16.50125 -24.75187,24.75188c-7.2025,7.2025 4.00438,18.32875 11.23375,11.09937c10.105,-10.105 20.21,-20.21 30.315,-30.315c3.01,-3.03688 2.92938,-8.14313 -0.08062,-11.15313z" fill="#ffffff" />
+                    </g>
+                  </g>
+                </svg>
+              </button>
+            </div>
+          )
       }
-      <div>
-        <Link to="/doctors"> Browse</Link> through our wide array of medical professionals always at your service.
+      {
+        alert.load
+          ? (
+            <SweetAlert
+              error
+              title={alert.message}
+              onConfirm={handleConfirmed}
+              onCancel={handleCancel}
+              timeout={3500}
+            />
+          ) : null
+      }
+      <div className={`${style.intro} ${style.float}`}>
+      <h3 data-testid="check-home-route">Landing Page</h3>
+        <Link to="/doctors">
+          {' '}
+          Browse
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="30"
+            height="30"
+            viewBox="0 0 172 172"
+            style={{ fill: '#000000' }}
+          >
+            <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+              <path d="M0,172v-172h172v172z" fill="none" />
+              <path d="M86,161.68c-41.79691,0 -75.68,-33.88309 -75.68,-75.68v0c0,-41.79691 33.88309,-75.68 75.68,-75.68v0c41.79691,0 75.68,33.88309 75.68,75.68v0c0,41.79691 -33.88309,75.68 -75.68,75.68z" fill="#ffffff" />
+              <g>
+                <path d="M19.32313,86c0,-36.81875 29.85813,-66.67687 66.67688,-66.67687c36.81875,0 66.67688,29.85813 66.67688,66.67688c0,36.81875 -29.85812,66.67688 -66.67687,66.67688c-36.81875,0 -66.67687,-29.85812 -66.67687,-66.67687z" fill="#98bf0d" />
+                <path d="M113.25125,81.10875c-10.105,-10.105 -20.21,-20.21 -30.315,-30.315c-7.2025,-7.2025 -18.32875,4.00437 -11.09938,11.23375c8.22375,8.22375 16.47438,16.4475 24.69812,24.69813c-8.25062,8.25062 -16.50125,16.50125 -24.75187,24.75188c-7.2025,7.2025 4.00438,18.32875 11.23375,11.09937c10.105,-10.105 20.21,-20.21 30.315,-30.315c3.01,-3.03688 2.92938,-8.14313 -0.08062,-11.15313z" fill="#ffffff" />
+              </g>
+            </g>
+          </svg>
+        </Link>
+        {' '}
+        through our wide array of medical professionals always at your service.
       </div>
-      <div className="reg-modal modal">
-        <span className="close close-reg">&times;</span>
-        <form className="reg-form form" onSubmit={handleRegSubmit}>
-          <h1>Register</h1>
-          <label htmlFor="username">
-            Username <br />
-            <input type="text" name="username" onChange={handleRegChange} required />
-          </label>
-
-          <label htmlFor="password">
-            Password <br />
-            <input type="password" name="password" minLength='6' onChange={handleRegChange} required />
-          </label>
-          <label htmlFor="password-confirmation">
-            Confirm Password <br />
-            <input type="password" name="password-conf" minLength='6' onChange={handleRegChange} required />
-          </label>
-          <input type="submit" value="Register" />
-        </form>
-      </div>
-
-      <div className="signin-modal modal">
-        <span className="close close-sign">&times;</span>
-        <form className="signin-form form" onSubmit={handleSigninSubmit}>
-          <h1>Sign In</h1>
-          <label htmlFor="username">
-            Username
-          <input type="text" name="username" required />
-          </label>
-
-          <label htmlFor="password">
-            Password
-          <input type="password" name="password" required />
-          </label>
-          <input type="submit" value="Sign In" />
-        </form>
-      </div>
+      <Singup
+        load={load}
+        handleRegChange={handleRegChange}
+        handleRegSubmit={handleRegSubmit}
+      />
+      <Singin
+        load={load}
+        handleSignInChange={handleSignInChange}
+        handleSigninSubmit={handleSigninSubmit}
+      />
+      <SmartSlider
+        autoSlide
+        slides={slidesArray}
+        buttonShape="round"
+      />
     </div>
-  )
-}
+  );
+};
+
+
+HomePage.defaultProps = {
+  auth: PropTypes.shape({
+    isLogged: false,
+    user: '',
+  }),
+};
+
+
+HomePage.propTypes = {
+  setAuth: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    isLogged: PropTypes.bool,
+    user: PropTypes.string,
+  }),
+  setLogout: PropTypes.func.isRequired,
+  trigger: PropTypes.shape({
+    show: PropTypes.bool.isRequired,
+  }).isRequired,
+  triggerShowSignin: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
