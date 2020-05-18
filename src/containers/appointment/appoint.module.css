@@ -1,0 +1,177 @@
+.container {
+  width: 99vw;
+  height: 99vh;
+  display: flex;
+  justify-content: center;
+}
+
+.containerLoad {
+  background: #E5EFF1;
+  align-items: center;
+}
+
+.user {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  font-size: 30px;
+}
+
+.menuIcon, .closeMenu {
+  display: none;
+}
+
+.menuWrap {
+  width: min-content;
+}
+
+.midBar p:first-child {
+  cursor: pointer;
+}
+
+.mainBar {
+  width: 80%;
+  display: flex;
+  padding-top: 20px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.appBar {
+  width: 100%;
+  height: 500px;
+  padding-top: 20px;
+  overflow-y: auto;
+}
+
+.appBar h3 {
+  font-size: 18px;
+}
+
+.mainBar>h3 {
+  font-size: 30px;
+  color: #1a9afcfb;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 95%;
+  margin: auto;
+}
+
+.appBar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.appBar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.appBar::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: #1a9afcfb;
+}
+
+.tableRow {
+  box-shadow: 1px 2px 0 silver;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.tableData {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.delButton {
+  border: none;
+  background-color: #1a9afcfb;
+  color: #fff;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.noApp a {
+  border-radius: 10px;
+  border: 2px solid gray;
+  background-color: #99C210;
+  color: #fff;
+  padding: 5px;
+  margin: 0 5px;
+}
+
+@media (max-width: 770px) {
+  .sideBar {
+    display: none;
+  }
+  .container, .containerLoad {
+    min-height: 100vh;
+  }
+  .appBar {
+    margin-top: 0;
+    padding-top: 10px;
+    height: auto;
+    overflow: initial;
+  }
+  .mainBar {
+    margin-top: 30px;
+    width: 95%;
+    margin-bottom: 20px;
+  }
+  .delButton {
+    font-size: 16px;
+  }
+  .menuIcon, .closeMenu {
+    display: initial;
+    cursor: pointer;
+  }
+  .menuIcon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .closeWrap {
+    position: relative;
+    left: -40%;
+    top: 10px;
+  }
+  .sideBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 40%;
+    background-color: #fff;
+  }
+  .rightBar {
+    width: 65%;
+  }
+}
+
+@media (max-width: 430px) {
+  .delButton {
+    font-size: 13px;
+  }
+  .tableRow {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .tableData {
+    padding: 5px 0;
+    justify-content: center;
+  }
+  .sideBar {
+    width: 70%;
+  }
+}
