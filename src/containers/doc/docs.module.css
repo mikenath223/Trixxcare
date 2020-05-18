@@ -1,7 +1,8 @@
 .container {
   display: flex;
   width: 100vw;
-  min-height: 99.5vh;
+  min-height: 99vh;
+  min-height: -webkit-fill-available;
 }
 
 .containerLoad {
@@ -15,6 +16,14 @@
 
 .slideWrap {
   width: 80%;
+  position: relative;
+}
+
+.user {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  font-size: 30px;
 }
 
 .sideBar {
@@ -24,6 +33,13 @@
   width: 20%;
   align-items: center;
   box-shadow: 0 2px 2px 2px silver;
+}
+
+.user {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  font-size: 30px;
 }
 
 .midBar {
@@ -54,13 +70,20 @@
   color: rgba(0, 0, 0, 0.9);
 }
 
-.sideFoot a {
+.sideBar a {
   color: inherit;
   text-decoration: none;
 }
 
-.sideFoot p:first-child {
+.sideFoot button {
+  border: none;
+  outline: none;
+  font-size: 22px;
+  font-weight: 600;
+  background-color: #fff;
+  color: inherit;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
 .sideFoot p:last-child {
@@ -70,6 +93,19 @@
   width: 100%;
   justify-content: space-around;
   cursor: pointer;
+}
+
+.sideFoot p:nth-child(2) {
+  margin-top: -20px;
+}
+
+.overlay {
+  position: absolute;
+  height: 70%;
+  width: 85%;
+  left: 90px;
+  bottom: 50px;
+  z-index: 2;
 }
 
 .logo {
@@ -121,6 +157,10 @@
   opacity: 0.5;
 }
 
+.docName, .docDet {
+  font-size: 18px;
+}
+
 .docName {
   color: #000;
   font-weight: bold;
@@ -130,6 +170,30 @@
   color: gray;
 }
 
+.menuIcon, .closeMenu {
+  display: none;
+}
+
+.menuWrap {
+  width: min-content;
+}
+
+@media (max-width: 1030px) {
+  .overlay {
+    left: 70px;
+    width: 80%;
+  }
+}
+
+@media (max-width: 770px) {
+  .sideBar {
+    width: 35%;
+  }
+  .slideWrap {
+    width: 65%;
+  }
+}
+
 @media (max-width: 710px) {
   .sideBar {
     display: none;
@@ -137,10 +201,43 @@
   .slideWrap {
     width: 100%;
   }
+  .overlay {
+    left: 70px;
+    width: 75%;
+  }
+  .menuIcon, .closeMenu {
+    display: initial;
+    cursor: pointer;
+  }
+  .menuIcon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .closeWrap {
+    position: relative;
+    left: -40%;
+    top: 10px;
+  }
+  .sideBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 40%;
+    background-color: #fff;
+  }
 }
 
 @media (max-width: 450px) {
   .intro {
     margin-top: 80px;
+  }
+  .overlay {
+    left: 70px;
+    width: 55%;
+  }
+  .sideBar {
+    width: 70%;
   }
 }
