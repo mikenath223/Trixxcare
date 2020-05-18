@@ -317,7 +317,7 @@ const HomePage = ({
           ) : null
       }
       <div className={`${style.intro} ${style.float}`}>
-      <h3 data-testid="check-home-route">Landing Page</h3>
+        <h3 data-testid="check-home-route">Landing Page</h3>
         <Link to="/doctors">
           {' '}
           Browse
