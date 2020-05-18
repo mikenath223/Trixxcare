@@ -156,6 +156,10 @@ a {
 	display: flex;
 }
 
+h3[data-testid] {
+  display: none;
+}
+
 @media (max-width: 380px) {
 	.react-calendar__month-view__weekdays {
 		font-size: 0.6em
