@@ -186,8 +186,8 @@ const SingleDoc = ({
   }
   return (
     <div className={styles.container}>
-    <h3 data-testid="check-home-route">Categories</h3>
-        <h3 data-testid="check-singledoc-route">Single Doc</h3>
+      <h3 data-testid="check-home-route">Categories</h3>
+      <h3 data-testid="check-singledoc-route">Single Doc</h3>
       <div className={`${styles.sideBar} ${style.sideBar} sideBar`}>
         <div role="button" tabIndex="0" onClick={handleCloseMenu} onKeyDown={() => {}} className={`${style.closeWrap} ${style.menuWrap}`}>
           <img src="https://img.icons8.com/color/30/000000/close-window.png" className={style.closeMenu} alt="" />
