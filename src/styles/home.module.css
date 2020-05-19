@@ -76,7 +76,7 @@
   top: 60%;
   position: absolute;
   display: flex;
-  width: calc(auto + 40px);
+  width: 140px;
 }
 
 .registerButs>button {
