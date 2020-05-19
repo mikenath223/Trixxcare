@@ -238,7 +238,7 @@ const Appointments = ({
               ))}
             </tbody>
           </table>
-          {alert.load && alert.type === 'success'
+          {alert.type === 'success'
             ? (
               <SweetAlert
                 success
@@ -248,15 +248,16 @@ const Appointments = ({
                 timeout={2000}
               />
             )
-            : (
-              <SweetAlert
-                error
-                title={alert.message}
-                onConfirm={handleConfirmed}
-                onCancel={handleCancel}
-                timeout={3500}
-              />
-            )}
+            : null }
+          {alert.type === 'error' ? (
+            <SweetAlert
+              error
+              title={alert.message}
+              onConfirm={handleConfirmed}
+              onCancel={handleCancel}
+              timeout={3500}
+            />
+          ) : null }
         </div>
       </div>
     </div>
