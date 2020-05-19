@@ -124,7 +124,6 @@ const DocPage = ({
               <Link to="/appointments">APPOINTMENTS</Link>
             </p>
           ) : null}
-          <p>LIFESTYLE</p>
         </div>
 
         <footer className={style.sideFoot}>

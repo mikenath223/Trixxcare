@@ -108,7 +108,8 @@
   background-color: #99C210;
   color: #fff;
   padding: 5px;
-  margin: 0 5px;
+  margin: 7px;
+  display: inline-block;
 }
 
 @media (max-width: 770px) {

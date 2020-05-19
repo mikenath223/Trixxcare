@@ -6,7 +6,7 @@ import SingleDoc from '../../containers/docProfile/singleDoc';
 
 const match = {
   params: {
-    name: 'Matt%20P.%20Abel,%20M.D.-2',
+    doc: 'Matt%20P.%20Abel,%20M.D.-2',
   },
 };
 const div = document.createElement('div');

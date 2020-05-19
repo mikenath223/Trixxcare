@@ -67,6 +67,8 @@ const SingleDoc = ({
     setDate(`${date.split(' ')[0]} ${e.target.value}`);
     document.querySelector('.createAppoint').disabled = false;
   };
+  const id = match.params.doc.split('-')[1];
+
 
   const handleSetAppoint = () => {
     if (date.length >= 15) {
@@ -79,7 +81,7 @@ const SingleDoc = ({
         },
         body: JSON.stringify({
           date,
-          doctor_id: match.params.doc,
+          doctor_id: id,
           location: ret.location,
           doctor_name: ret.name,
         }),
@@ -117,7 +119,7 @@ const SingleDoc = ({
 
   const getDoc = useCallback(
     () => {
-      fetch(`https://trixxcare.herokuapp.com/api/doctors/${match.params.doc}`, {
+      fetch(`https://trixxcare.herokuapp.com/api/doctors/${id}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -132,7 +134,7 @@ const SingleDoc = ({
           setIsLoaded(true);
           setErr(true);
         });
-    }, [match.params.doc],
+    }, [id],
   );
 
   const runLocalstore = useCallback(() => {
@@ -161,14 +163,13 @@ const SingleDoc = ({
       history.push('/');
     }
     if (docs.length > 0) {
-      const filtered = docs.filter((el, ind) => ind + 1 === +match.params.doc);
+      const filtered = docs.filter((el, ind) => ind + 1 === +id);
       setRet(filtered[0]);
       return setIsLoaded(true);
     }
 
-
     return setIsLoaded(false);
-  }, [auth.user, docs, match.params.doc, getDoc, history, runLocalstore, setAuth]);
+  }, [auth.user, docs, id, getDoc, history, runLocalstore, setAuth]);
 
 
   if (err) {
@@ -209,7 +210,6 @@ const SingleDoc = ({
             {' '}
             <Link to="/appointments">APPOINTMENTS</Link>
           </p>
-          <p>LIFESTYLE</p>
         </div>
 
         <footer className={styles.sideFoot}>

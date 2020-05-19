@@ -180,7 +180,6 @@ const Appointments = ({
             {' '}
             <Link to="/appointments">APPOINTMENTS</Link>
           </p>
-          <p>LIFESTYLE</p>
         </div>
 
         <footer className={style.sideFoot}>
