@@ -6,7 +6,6 @@
   justify-content: space-between;
   align-items: center;
   margin: 20px auto;
-  margin-right: -20px;
   background-color: #fff;
   border-radius: 15px;
   padding: 0;
@@ -26,6 +25,9 @@
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
   transition: all 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .close {
@@ -35,7 +37,9 @@
   font-size: 30px;
   font-weight: 800;
   color: rgb(58, 55, 55);
-  float: right;
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
 
 .close:hover, .close:focus {
