@@ -13,7 +13,7 @@
 
 ### TrixCare
 
-A meals recipe app built with the React and Redux frameworks. It showcases meals accoring to their categories and each meal contains instructions on how to prepare also included is a Youtube video.
+A health care delivery app built with the React and Redux frameworks coupled with a backend API built with Ruby on Rails. It showcases various caregivers and gives the opportunity for patients to book appoitments with a caregiver.
 
 ## Table of Contents
 
@@ -32,15 +32,16 @@ A meals recipe app built with the React and Redux frameworks. It showcases meals
 
 ## User Features
 
-- A user can view all meals which are grouped by categories.
-- The user can filter search based on the meal catgeory of choice.
-- A user can navigate throught the three pages of the site:
+- A user can log in to the app and have their login credentials saved on the back-end.
+- The user choose between a of medical caregiver and setup an appointment.
+- A user can navigate through the four pages of the site:
 
-* Category Page
-* Meal Page
-* Recipe Page
+* Homepage
+* Doctors Page
+* Single Doctor details Page
+* Appointments Page
 
-<img src="src/screenshot/munchit.gif"/>
+<img src="src/imgs/screenshot.png"/>
 <!-- BUILT WITH -->
 
 # Built With
@@ -52,6 +53,7 @@ A meals recipe app built with the React and Redux frameworks. It showcases meals
 
 # Technologies Employed
 
+- Ruby on Rails
 - React Hooks
 - Redux Store
 - React Routers
@@ -61,14 +63,16 @@ A meals recipe app built with the React and Redux frameworks. It showcases meals
 <!-- LIVE PREVIEW -->
 
 ## LIVE PREVIEW
-* Here is a link to the live version of the app - https://muunchit.herokuapp.com/
+* Here is a link to the live frontend version of the app - https://trixxcare.netlify.app/
 
-* You can watch a live demostration of the project using this link - https://www.loom.com/share/2296d8cf689548d0ad0babc6096c8f70
+* Here is a link to the backend Rails-API source code of the site - https://github.com/mikenath223/trixxcare-api
 <!-- REQUIRED INSTALLATION -->
 
 ## REQUIRED INSTALLATIONS
 
 - npm
+- Ruby v2.6
+-  rails v5.2
 
 <!-- INSTALLATION -->
 
@@ -120,7 +124,7 @@ your@pc:~$ npm test src/tests/<testfile>
 
 ## Future Features
 
-- Do more work on the front-end section of the project.
+- Do more work on the front-end and back-end sections of the project.
 
 ## Learn More
 
