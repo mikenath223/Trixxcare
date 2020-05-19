@@ -59,7 +59,7 @@ button.request {
 }
 
 .rightBar {
-  box-shadow: inset 2px 0 2px 2px silver;
+  box-shadow: 2px 0 2px 2px silver;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -89,7 +89,7 @@ button.request {
 }
 
 .rightBar p:nth-child(odd), .dep {
-  background-color: silver;
+  border: 2px dotted silver;
   padding: 10px 20px;
 }
 
@@ -119,14 +119,14 @@ button.request {
 }
 
 .areas span {
-  background-color: #E79010;
+  border: 2px solid rgb(231, 113, 16);
   padding: 10px;
   display: inline-block;
   margin-bottom: 10px;
 }
 
 .rightBar p:nth-child(2) {
-  background-color: #E59011;
+  border: 2px solid #E59011;
   padding: 10px;
   width: auto;
 }
@@ -143,7 +143,7 @@ button.request {
 
 .price {
   padding: 10px;
-  color: silver;
+  color: #fff;
   background-color: #000;
 }
 
