@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 20px auto;
-  margin-right: calc(auto + -20px);
+  margin-right: calc(auto - 20px);
   background-color: #fff;
   border-radius: 15px;
   padding: 0;
