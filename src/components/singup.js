@@ -7,7 +7,7 @@ import style from '../styles/reg.module.css';
 const Singup = ({ handleRegChange, handleRegSubmit, load }) => (
   <div className={`${style.modal} modal reg-modal `}>
     <span className={`${style.close} close close-reg`}>&times;</span>
-    <form method="post" className={`${style.form} form reg-form `} onSubmit={handleRegSubmit}>
+    <form className={`${style.form} form reg-form `} onSubmit={handleRegSubmit}>
       <h1>Register</h1>
       <label htmlFor="username">
         Username
