@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import PropTypes from 'prop-types';
-import { handleCloseMenu, handleOpenMenu } from '../404/domlist';
+import { handleCloseMenu, handleOpenMenu, resizer } from '../404/domlist';
 import {
   SETAPPOINT, SETLOGIN, SETLOGOUT, DELAPPOINT,
 } from '../../actions/index';
@@ -128,6 +128,7 @@ const Appointments = ({
         .then(res => {
           setAppoints(res);
           setIsLoaded(true);
+          resizer()
         })
         .catch(() => {
           setIsLoaded(true);
@@ -247,7 +248,7 @@ const Appointments = ({
                 timeout={2000}
               />
             )
-            : null }
+            : null}
           {alert.type === 'error' ? (
             <SweetAlert
               error
@@ -256,7 +257,7 @@ const Appointments = ({
               onCancel={handleCancel}
               timeout={3500}
             />
-          ) : null }
+          ) : null}
         </div>
       </div>
     </div>

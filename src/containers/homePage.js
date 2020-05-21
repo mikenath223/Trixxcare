@@ -309,7 +309,7 @@ const HomePage = ({
           ? (
             <SweetAlert
               error
-              title={alert.message}
+              title={alert.message || "Error making request"}
               onConfirm={handleConfirmed}
               onCancel={handleCancel}
               timeout={3500}
