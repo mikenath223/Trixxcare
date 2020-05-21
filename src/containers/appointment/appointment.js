@@ -128,7 +128,7 @@ const Appointments = ({
         .then(res => {
           setAppoints(res);
           setIsLoaded(true);
-          resizer()
+          resizer();
         })
         .catch(() => {
           setIsLoaded(true);

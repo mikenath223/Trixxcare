@@ -5,7 +5,9 @@ import PropTypes, { object } from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import AliceCarousel from 'react-alice-carousel';
 import { SETDOCTORS, SETSIGNIN, SETLOGOUT } from '../../actions/index';
-import { handleCloseMenu, handleOpenMenu, setText, resizer } from '../404/domlist';
+import {
+  handleCloseMenu, handleOpenMenu, setText, resizer,
+} from '../404/domlist';
 import style from './docs.module.css';
 import Doctor from '../../components/doctorCat';
 import Error from '../404/error-page';
@@ -31,7 +33,7 @@ const DocPage = ({
   const [err, setErr] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [filterdocs, setfilterdocs] = useState('')
+  const [filterdocs, setfilterdocs] = useState('');
 
   const history = useHistory();
 
@@ -56,11 +58,10 @@ const DocPage = ({
     setAlert(true);
   };
 
-  const handleFilterDocs = (e) => {
+  const handleFilterDocs = () => {
     if (filterdocs !== '' && filterdocs.split('')[filterdocs.length - 1] !== '\\') {
       const pattern = new RegExp(`${filterdocs}`, 'ig');
       const filtered = docs.filter(entry => pattern.test(entry.name));
-      console.log(filtered)
       return filtered.map(doc => (
         <Doctor
           doc={doc}
@@ -76,7 +77,7 @@ const DocPage = ({
         key={doc.id}
       />
     ));
-  }
+  };
 
   const logged = auth.isLogged || localStorage.tok;
 
@@ -101,12 +102,11 @@ const DocPage = ({
       return setIsLoaded(true);
     }
 
-    resizer()
+    resizer();
 
     return () => {
-
       setIsLoaded(false);
-    }
+    };
   }, [setDocs, docs.length]);
 
 
@@ -174,7 +174,7 @@ const DocPage = ({
           <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
         </div>
         {!logged ? <div className={style.overlay} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleAuth}> </div> : null}
-        <input type="search" value={filterdocs} className={style.docsSearch} placeholder="Search Doctors" aria-label="Search" aria-describedby="basic-addon1" data-testid="entry" onChange={(e) => setfilterdocs(e.target.value)} />
+        <input type="search" value={filterdocs} className={style.docsSearch} placeholder="Search Doctors" aria-label="Search" aria-describedby="basic-addon1" data-testid="entry" onChange={e => setfilterdocs(e.target.value)} />
         <div className={style.intro}>
           <p>Latest Caregivers</p>
           <p>Please select a caregiver</p>

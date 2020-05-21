@@ -84,16 +84,16 @@ const handleCloseMenu = () => {
 
 const resizer = () => {
   window.addEventListener('resize', () => {
-    if (!!document.querySelector('.sideBar')) {
+    if (document.querySelector('.sideBar')) {
       if (window.innerWidth >= 710) {
-        document.querySelector('.sideBar').style.display = 'flex'
+        document.querySelector('.sideBar').style.display = 'flex';
       } else {
-        document.querySelector('.sideBar').style.display = 'none'
+        document.querySelector('.sideBar').style.display = 'none';
       }
     }
-  })
-}
+  });
+};
 
 export {
-  showRegister, showSignin, slideHeight, setText, handleOpenMenu, handleCloseMenu, resizer
+  showRegister, showSignin, slideHeight, setText, handleOpenMenu, handleCloseMenu, resizer,
 };
