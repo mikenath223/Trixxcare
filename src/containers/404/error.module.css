@@ -1,0 +1,54 @@
+.image {
+  margin-top: 20px;
+  max-width: 68%;
+  height: auto;
+}
+
+.containerErr {
+  text-align: center;
+  position: relative;
+  width: 98vw;
+  height: 90vh;
+}
+
+.h1 {
+  display: none;
+}
+
+.homeBut {
+  display: block;
+  width: 30%;
+  margin: auto;
+  text-align: center;
+}
+
+.button {
+  position: absolute;
+  width: 250px;
+  bottom: 50%;
+  left: calc(50% - (250px/2));
+  border: 2px solid silver;
+  font-size: 25px;
+  font-weight: 900;
+  height: 50px;
+  border-radius: 20px;
+}
+
+.button:focus,
+.button:hover {
+  border: none;
+  outline: none;
+}
+
+.homeLink {
+  font-weight: 800;
+  font-size: 40px;
+  padding-top: 10px;
+  padding-left: 40px;
+  color: #D45436;
+}
+
+.navbar {
+  padding: 10px 0;
+  box-shadow: 0 2px 2px silver;
+}

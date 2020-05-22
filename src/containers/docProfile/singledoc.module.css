@@ -1,0 +1,276 @@
+.container {
+  width: 99vw;
+  min-height: 99vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerLoad {
+  width: 100vw;
+  background-color: #E5EFF1;
+}
+
+.setAppoint, .time {
+  display: none;
+}
+
+.createAppoint {
+  margin: 20px 0 20px 0;
+}
+
+.time {
+  margin: 30px 0 0 0;
+}
+
+.slideWrap {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+}
+
+.slideWrap img {
+  max-width: 100%;
+  height: auto;
+}
+
+.sideBar {
+  width: 20%;
+  min-height: 99vh;
+}
+
+.menuIcon, .closeMenu {
+  display: none;
+}
+
+.menuWrap {
+  width: min-content;
+}
+
+button.request {
+  text-shadow: 2px 2px 2px #000;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 1.5px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  width: 70%;
+  color: #fff;
+  box-shadow: 2px 3px 3px 2px rgba(240, 44, 60, 0.6);
+  background-color: #E40E0C;
+  justify-content: space-around;
+  border-radius: 15px;
+}
+
+button.request:focus {
+  outline: none;
+}
+
+.rightBar {
+  box-shadow: 2px 0 2px 2px silver;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  height: 700px;
+  width: 40%;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.rightBar p:not(.dep p), .areas {
+  width: 100%;
+  word-spacing: 3px;
+  letter-spacing: 0.2px;
+}
+
+.rightBar p:first-child {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.rightBar p:nth-child(n+2), .areas {
+  font-weight: 600;
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.rightBar p:nth-child(odd), .dep, .areas {
+  border: 2px dotted silver;
+  padding: 10px 20px;
+}
+
+.locWrap {
+  white-space: nowrap;
+}
+
+.rightBar .dep span, .location {
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.imgWrap img {
+  max-height: 600px;
+  width: auto;
+}
+
+.imgWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.rightBar p:first-child {
+  background-color: transparent;
+}
+
+.areas {
+  text-align: center;
+}
+
+.areas span {
+  border: 2px solid rgb(231, 113, 16);
+  padding: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.rightBar p:nth-child(2) {
+  border: 2px solid #E59011;
+  padding: 10px;
+  width: auto;
+}
+
+.rightBar p:nth-child(n+3), .dep {
+  word-spacing: 10px;
+}
+
+.dep span {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.rightBar p.price {
+  border: 3px solid;
+  padding: 10px;
+  color: #fff;
+  border-top-color: orange;
+  border-bottom-color: orangered;
+  background-color: #000;
+  border-style: solid;
+}
+
+.pay {
+  white-space: nowrap;
+  border: 0;
+  outline: 0;
+  height: 40px;
+  width: 80px;
+  line-height: 40px;
+  padding: 0 14px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  background-color: #6772e5;
+  text-decoration: none;
+  transition: all 150ms ease;
+  margin-top: 10px;
+}
+
+.pay:hover {
+  color: #fff;
+  cursor: pointer;
+  background-color: #7795f8;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.timeInput2 {
+  border: 1px solid gray;
+}
+
+@media (max-width: 900px) {
+  .slideWrap {
+    width: 70%;
+  }
+  .sideBar {
+    width: 30%;
+  }
+  .rightBar {
+    height: 800px;
+  }
+}
+
+@media (max-width: 810px) {
+  .rightBar p:nth-child(n+2), .areas {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  button.request {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 770px) {
+  .slideWrap {
+    width: 98%;
+  }
+  .menuIcon, .closeMenu {
+    display: initial;
+    cursor: pointer;
+  }
+  .menuIcon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .closeWrap {
+    position: relative;
+    left: -40%;
+    top: 10px;
+  }
+  .sideBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 40%;
+    background-color: #fff;
+    display: none;
+  }
+  .rightBar {
+    width: 65%;
+  }
+}
+
+@media (max-width: 430px) {
+  .slideWrap {
+    padding-top: 20px;
+    flex-direction: column;
+  }
+  .rightBar {
+    width: 95%;
+    margin: 40px auto;
+    padding-right: 0;
+  }
+  button.request {
+    font-size: 16px;
+    width: 65%;
+  }
+  .areas {
+    text-align: center;
+  }
+  .sideBar {
+    width: 70%;
+  }
+}

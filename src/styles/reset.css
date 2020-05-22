@@ -1,0 +1,167 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap');
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+	font-family: 'Balsamiq Sans', cursive;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.slideContent {
+	background-size: contain !important;
+}
+
+.indicatorWrapperUl {
+	top: 0;
+	left: 0;
+	transform: rotate(90deg);
+}
+
+.indicatorContainer {
+	top: -10%;
+	left: 93%;
+}
+
+.buttonWrapperContainer {
+	display: none;
+}
+
+.alice-carousel {
+	position: relative;
+}
+
+.alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
+	position: absolute;
+	background-color: #99C210;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	top: 40%;
+	width: 70px;
+	height: 50px;
+	text-align: center;
+	line-height: 65px;
+}
+
+.alice-carousel__next-btn-item {
+	right: 0;
+	transform: rotate(0.5turn);
+}
+
+.alice-carousel__prev-btn-item {
+	opacity: 0.6;
+	left: 0;
+}
+
+svg {
+	vertical-align: initial;
+}
+
+.alice-carousel__prev-btn-item svg {
+	transform: rotate(32deg)
+}
+
+.alice-carousel__next-btn-item svg {
+	transform: rotate(90deg)
+}
+
+.btn {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn-link {
+	font-weight: 400;
+	color: #007bff;
+	text-decoration: none;
+}
+
+.btn-lg {
+	padding: .5rem 1rem;
+	font-size: 1.25rem;
+	line-height: 1.5;
+	border-radius: .3rem;
+}
+
+.btn:not(:disabled):not(.disabled) {
+	cursor: pointer;
+}
+
+.btn-danger {
+	color: #fff;
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.btn-success {
+	background-color: green;
+}
+
+.btn-primary {
+	background-color: #007bff;
+}
+
+a {
+	text-decoration: none;
+}
+
+.lead {
+	align-items: center;
+	justify-content: space-around !important;
+	flex-direction: column;
+	width: auto !important;
+	display: flex;
+}
+
+h3[data-testid] {
+  display: none;
+}
+
+@media (max-width: 380px) {
+	.react-calendar__month-view__weekdays {
+		font-size: 0.6em
+	}
+}

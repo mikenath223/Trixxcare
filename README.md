@@ -1,41 +1,130 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
-## Available Scripts
+<p align="center">
+  <a href="https://www.ruby-lang.org/en/">
+    <img src="https://img.shields.io/badge/React-v16.3.1-brightgreen.svg" alt="ruby version">
+    <img src="https://img.shields.io/badge/Redux-v4.0.5-brightgreen.svg" alt="ruby version">
+  </a>
+</p>
 
-In the project directory, you can run:
+### TrixCare
 
-### `npm start`
+A health care delivery app built with the React and Redux frameworks coupled with a backend API built with Ruby on Rails. It showcases various caregivers and gives the opportunity for patients to book appoitments with a caregiver.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of Contents
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [User Features](#user-features)
+- [Built With](#built-with)
+- [Technologies Employed](#technologies-employed)
+- [Live Preview](#live-preview)
+- [Required Installations](#required-installations)
+- [App Installation](#instalation)
+- [Future Features](#future-features)
+- [License](#license)
+- [Author](#author)
+- [Acknowledgements](#acknowledgements)
 
-### `npm test`
+<!-- User features -->
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## User Features
 
-### `npm run build`
+- A user can log in to the app and have their login credentials saved on the back-end.
+- The user choose between a of medical caregiver and setup an appointment.
+- A user can navigate through the four pages of the site:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Homepage
+* Doctors Page
+* Single Doctor details Page
+* Appointments Page
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+<img src="src/imgs/screenshot.png"/>
+<!-- BUILT WITH -->
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Built With
 
-### `npm run eject`
+- VsCode
+- Windows
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<!-- TECHNOLOGIES EMPLOYED -->
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Technologies Employed
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Ruby on Rails
+- React Hooks
+- Redux Store
+- React Routers
+- Jest auto watch
+- Css Modules
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<!-- LIVE PREVIEW -->
+
+## LIVE PREVIEW
+* Here is a link to the live frontend version of the app - https://trixxcare.netlify.app/
+
+* Here is a link to the backend Rails-API source code of the site - https://github.com/mikenath223/trixxcare-api
+<!-- REQUIRED INSTALLATION -->
+
+## REQUIRED INSTALLATIONS
+
+- npm
+- Ruby v2.6
+-  rails v5.2
+
+<!-- INSTALLATION -->
+
+## Installation of This Repository
+
+Clone the Repository,
+
+```Shell
+your@pc:~$ git clone https://github.com/mikenath223/trixxcare.git
+```
+
+Go to the downloaded folder
+
+```Shell
+your@pc:~$ cd trixxcare/
+```
+
+Install all packages
+
+```Shell
+your@pc:~$ npm install
+```
+
+Start the server
+
+```Shell
+your@pc:~$ npm start
+```
+
+The app will open on your local host port 3000.
+
+<!-- run tests -->
+
+## Run tests
+
+Run all tests
+
+```Shell
+your@pc:~$ npm test
+```
+
+Run specific tests
+
+```Shell
+your@pc:~$ npm test src/tests/<testfile>
+```
+
+<!-- Future features -->
+
+## Future Features
+
+- Do more work on the front-end and back-end sections of the project.
 
 ## Learn More
 
@@ -43,26 +132,36 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+# Author
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+**Michgolden Ukeje**
 
-### Analyzing the Bundle Size
+- Github: [@mikenath223](https://github.com/mikenath223)
+- Twitter: [@Michgolden_Nath](https://twitter.com/MichgoldenU)
+- Linkedin: [Ukeje Michgolden](https://https://www.linkedin.com/in/michgoldenukeje/)
+  <br />
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+# License
 
-### Making a Progressive Web App
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+<!-- ACKNOWLEDGEMENTS -->
 
-### Advanced Configuration
+## Acknowledgements
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- [Microverse](https://www.microverse.org/)
+- [The Odin Project](https://www.theodinproject.com/)
 
-### Deployment
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[contributors-shield]: https://img.shields.io/github/contributors/mikenath223/trixxcare.svg?style=flat-square
+[contributors-url]: https://github.com/mikenath223/trixxcare/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mikenath223/trixxcare
+[forks-url]: https://github.com/mikenath223/trixxcare/network/members
+[stars-shield]: https://img.shields.io/github/stars/mikenath223/trixxcare
+[stars-url]: https://github.com/mikenath223/trixxcare/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mikenath223/trixxcare
+[issues-url]: https://github.com/mikenath223/trixxcare/issues
+[license-shield]: https://img.shields.io/github/license/mikenath223/trixxcare
+[license-url]: https://github.com/mikenath223/trixxcare/blob/master/LICENSE.txt
