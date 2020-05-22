@@ -78,14 +78,14 @@ const HomePage = ({
             });
             triggerShowSignin({ show: false });
           });
+        } else {
+          setAlert(prevState => ({
+            ...prevState,
+            message: 'Username or password is incorrect!',
+            load: true,
+          }));
+          setLoad(false);
         }
-      }).catch(() => {
-        setAlert(prevState => ({
-          ...prevState,
-          message: 'Username or password is incorrect!',
-          load: true,
-        }));
-        setLoad(false);
       });
   };
 
@@ -113,6 +113,7 @@ const HomePage = ({
               load: true,
               type: 'error',
             }));
+            setLoad(false);
           });
         } else {
           getTok(registerCred.username, registerCred.pass);
@@ -125,6 +126,7 @@ const HomePage = ({
           load: true,
           type: 'error',
         }));
+        setLoad(false);
       });
   };
 
