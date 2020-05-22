@@ -70,7 +70,6 @@ label {
   border-radius: 15px;
   border: none;
   outline: none;
-  height: 30px;
   margin-top: 10px;
   border: 1px solid gray;
 }
@@ -94,6 +93,10 @@ input {
   font-size: 25px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.label {
+  font-size: 18px;
 }
 
 .signBut {

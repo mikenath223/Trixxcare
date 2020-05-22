@@ -117,7 +117,7 @@ const DocPage = ({
   }
   if (!isLoaded) {
     return (
-      <div className={`${style.containerLoad} container-fluid`}>
+      <div className={style.containerLoad}>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
         <h3 data-testid="check-doctors-route">Doctors</h3>
       </div>

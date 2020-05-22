@@ -9,12 +9,12 @@ const Singin = ({ handleSignInChange, handleSigninSubmit, load }) => (
     <span className={`${style.close} close close-sign `}>&times;</span>
     <form className={`${style.form} form signin-form `} onSubmit={handleSigninSubmit}>
       <h1>Sign In</h1>
-      <label htmlFor="username">
+      <label htmlFor="username" className={style.label}>
         Username
         <input type="text" name="username" onChange={handleSignInChange} required />
       </label>
 
-      <label htmlFor="password">
+      <label htmlFor="password" className={style.label}>
         Password
         <input type="password" name="password" onChange={handleSignInChange} required />
       </label>

@@ -1,11 +1,14 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import CheckoutForm from './checkout';
 import { SETLOGIN, SETLOGOUT } from '../../actions/index';
-import { handleCloseMenu, handleOpenMenu } from '../404/domlist';
+import { handleCloseMenu, handleOpenMenu, resizer } from '../404/domlist';
 import Error from '../404/error-page';
 import style from './singledoc.module.css';
 import 'react-calendar/dist/Calendar.css';
@@ -32,6 +35,7 @@ const SingleDoc = ({
   const [ret, setRet] = useState({});
   const [date, setDate] = useState('');
   const [alert, setAlert] = useState({ load: false, message: '', type: '' });
+  const [showPay, setShowpay] = useState({ payBtn: false, payForm: false });
 
   const history = useHistory();
 
@@ -47,6 +51,13 @@ const SingleDoc = ({
 
   const handleConfirmed = () => {
     setAlert({ load: false, message: '' });
+  };
+
+  const handleStripeCancel = () => {
+    setShowpay(prevState => ({
+      ...prevState,
+      payForm: false,
+    }));
   };
 
   const handleChange = date => {
@@ -103,6 +114,10 @@ const SingleDoc = ({
             load: true,
             type: 'success',
           }));
+          setShowpay(prevState => ({
+            ...prevState,
+            payBtn: true,
+          }));
           setDate('');
         }
       }).catch(e => {
@@ -137,6 +152,7 @@ const SingleDoc = ({
     }, [id],
   );
 
+
   const runLocalstore = useCallback(() => {
     fetch('https://trixxcare.herokuapp.com/api/currentuser', {
       headers: {
@@ -153,6 +169,14 @@ const SingleDoc = ({
       });
   }, [setAuth, getDoc]);
 
+  const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+  const handleShowPay = () => {
+    setShowpay(prevState => ({
+      ...prevState,
+      payForm: true,
+    }));
+  };
+
 
   useEffect(() => {
     if (auth.user && localStorage.tok) {
@@ -167,6 +191,7 @@ const SingleDoc = ({
       setRet(filtered[0]);
       return setIsLoaded(true);
     }
+    resizer();
 
     return setIsLoaded(false);
   }, [auth.user, docs, id, getDoc, history, runLocalstore, setAuth]);
@@ -179,14 +204,14 @@ const SingleDoc = ({
   }
   if (!isLoaded) {
     return (
-      <div className={`${style.container} container-fluid`}>
+      <div className={`${style.containerLoad} ${style.container}`}>
         <h3 data-testid="check-singledoc-route">Single Doc</h3>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
       </div>
     );
   }
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${style.container}`}>
       <h3 data-testid="check-home-route">Categories</h3>
       <h3 data-testid="check-singledoc-route">Single Doc</h3>
       <div className={`${styles.sideBar} ${style.sideBar} sideBar`}>
@@ -253,16 +278,35 @@ const SingleDoc = ({
             </div>
           )
             : null}
-          <p>
+          <p className={style.locWrap}>
             {' '}
-            <span>Location</span>
+            <span className={style.location}>Location</span>
             {' '}
             {ret.location}
           </p>
           <p className={style.price}>
-            Price
+            Price $
             {ret.price}
           </p>
+          { showPay.payBtn ? <button type="button" onClick={handleShowPay} className={style.pay}>Pay</button> : null }
+          { showPay.payForm
+            ? (
+              <SweetAlert
+                showCloseButton
+                onCancel={handleStripeCancel}
+                showConfirm={false}
+                onConfirm={handleStripeCancel}
+                title="Make Payment"
+              >
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm
+                    SweetAlert={SweetAlert}
+                    handleConfirmed={handleConfirmed}
+                    handleCancel={handleCancel}
+                  />
+                </Elements>
+              </SweetAlert>
+            ) : null}
           <button type="button" onClick={handleClick} className={`${style.request} btn btn-danger btn-link`}>
             Request Appointment
             <svg
@@ -310,7 +354,7 @@ const SingleDoc = ({
                 Set Time
                 {' '}
                 <br />
-                <input type="time" name="time" onInput={handleTimeChange} className="timeInput2" />
+                <input type="time" name="time" onInput={handleTimeChange} className={`${style.timeInput2} timeInput2`} />
               </label>
               <button type="button" className={`${style.createAppoint} createAppoint btn btn-danger btn-link`} onClick={handleSetAppoint}>Set Appointment</button>
             </SweetAlert>

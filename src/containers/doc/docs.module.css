@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  width: 100vw;
+  width: 99vw;
   min-height: 99vh;
   min-height: -webkit-fill-available;
 }
@@ -13,7 +13,10 @@
   align-items: center;
   background-color: #E5EFF1;
 }
+.container-fluid {
+  background-color: #E5EFF1;
 
+}
 .slideWrap {
   width: 80%;
   position: relative;
