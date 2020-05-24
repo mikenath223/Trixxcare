@@ -7,7 +7,7 @@ import style from '../styles/reg.module.css';
 const Singin = ({ handleSignInChange, handleSigninSubmit, load }) => (
   <div className={`${style.modal} modal signin-modal `}>
     <span className={`${style.close} close close-sign `}>&times;</span>
-    <form className={`${style.form} form signin-form `} onSubmit={handleSigninSubmit}>
+    <form className={`${style.form} form signin-form ${style.signInform}`} onSubmit={handleSigninSubmit}>
       <h1>Sign In</h1>
       <label htmlFor="username" className={style.label}>
         Username
