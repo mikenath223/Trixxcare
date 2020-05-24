@@ -102,18 +102,21 @@ input {
 
 @media (max-width: 430px) {
   .form {
+    display: initial;
     height: 550px;
     margin: 30px;
-    justify-content: initial;
   }
   .form h1 {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   .label {
-    margin-top: 10px;
+    width: 85%;
+    margin: 10px auto 10px auto;
   }
   .form button {
-    margin: 0;
+    display: block;
+    width: 50%;
+    margin: 30px auto 10px auto;
   }
   .signInform {
     height: 480px;
