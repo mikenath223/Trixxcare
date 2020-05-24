@@ -59,11 +59,11 @@
 }
 
 label {
-  width: 250px;
   display: flex;
-  margin: auto;
-  margin-bottom: 20px;
   flex-direction: column;
+  width: 250px;
+  margin: auto auto 20px auto;
+  font-size: 18px;
 }
 
 .form input {
@@ -95,10 +95,6 @@ input {
   cursor: pointer;
 }
 
-.label {
-  font-size: 18px;
-}
-
 .signBut {
   margin-bottom: 120px;
   display: inline-block;
@@ -109,13 +105,10 @@ input {
     height: 530px;
     margin: 30px;
   }
+  .form h1 {
+    margin-bottom: 20px;
+  }
   label {
     margin-top: 10px;
-  }
-}
-
-@media (max-width: 322px) {
-  .form {
-    height: 480px;
   }
 }
