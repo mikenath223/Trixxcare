@@ -113,7 +113,7 @@ input {
     margin-top: 10px;
   }
   .form button {
-    margin-top: 10px;
+    margin: 0;
   }
   .signInform {
     height: 480px;
