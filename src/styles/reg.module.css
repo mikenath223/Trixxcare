@@ -102,9 +102,10 @@ input {
 
 @media (max-width: 430px) {
   .form {
-    height: 580px;
+    height: 530px;
     margin: 30px;
     justify-content: initial;
+    align-items: initial;
   }
   .form h1 {
     margin-bottom: 20px;
