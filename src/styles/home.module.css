@@ -109,7 +109,7 @@
     font-size: 25px;
   }
   .registerButs {
-    top: 70%;
+    top: 65%;
     flex-direction: column;
     height: 120px;
     justify-content: space-around;
