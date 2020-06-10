@@ -58,21 +58,21 @@ A health care delivery app built with the React and Redux frameworks coupled wit
 - Redux Store
 - React Routers
 - Jest auto watch
-- Css Modules
+- CSS Modules
 
 <!-- LIVE PREVIEW -->
 
-## LIVE PREVIEW
+## Live Preview
 * Here is a link to the live frontend version of the app - https://trixxcare.netlify.app/
 
 * Here is a link to the backend Rails-API source code of the site - https://github.com/mikenath223/trixxcare-api
 <!-- REQUIRED INSTALLATION -->
 
-## REQUIRED INSTALLATIONS
+## Required Installations
 
 - npm
 - Ruby v2.6
--  rails v5.2
+-  Rails v5.2
 
 <!-- INSTALLATION -->
 
