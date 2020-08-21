@@ -119,7 +119,6 @@ const DocPage = ({
     return (
       <div className={style.containerLoad}>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
-        <h3 data-testid="check-doctors-route">Doctors</h3>
       </div>
     );
   }
@@ -132,7 +131,6 @@ const DocPage = ({
   return (
     <div className={style.container}>
       <div className={`${style.sideBar} sideBar`}>
-        <h3 data-testid="check-doctors-route">Doctors</h3>
         <div onClick={handleCloseMenu} role="button" tabIndex="0" onKeyDown={() => { }} className={`${style.closeWrap} ${style.menuWrap}`}>
           <img src="https://img.icons8.com/color/30/000000/close-window.png" className={style.closeMenu} alt="" />
         </div>

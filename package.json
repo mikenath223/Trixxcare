@@ -27,8 +27,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test a",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "coverage": "yarn test --maxWorkers 2 --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": "react-app"

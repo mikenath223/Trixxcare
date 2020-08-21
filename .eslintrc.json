@@ -17,6 +17,8 @@
       "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
       "import/no-unresolved": "off",
       "no-shadow": "off",
+      "react/jsx-props-no-spreading": "off",
+      "func-names": "off",
       "arrow-parens": ["error", "as-needed"]
     }
   }
