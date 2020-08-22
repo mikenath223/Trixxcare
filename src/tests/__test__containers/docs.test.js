@@ -1,6 +1,6 @@
 import React from 'react';
 import withReduxRouter from '../../utils/testUtils';
-import DocPage from '../../containers/doc/docPage';
+import DocPage from '../../containers/Doc/DocPage';
 
 
 describe('DocPage', function () {

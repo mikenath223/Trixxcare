@@ -1,6 +1,6 @@
 import React from 'react';
 import withReduxRouter from '../../utils/testUtils';
-import Appointments from '../../containers/appointment/appointment';
+import Appointments from '../../containers/Appointment/Appointment';
 
 describe('Appointments', function () {
   beforeEach(() => {

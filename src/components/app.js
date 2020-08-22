@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import HomePage from '../containers/homePage';
-import DocPage from '../containers/doc/docPage';
-import SingleDoc from '../containers/docProfile/singleDoc';
-import Appointments from '../containers/appointment/appointment';
-import Error from '../containers/404/error-page';
+import HomePage from '../containers/HomePage';
+import DocPage from '../containers/Doc/DocPage';
+import SingleDoc from '../containers/DocProfile/SingleDoc';
+import Appointments from '../containers/Appointment/Appointment';
+import Error from '../containers/404/ErrorPage';
 
 
 const App = () => (

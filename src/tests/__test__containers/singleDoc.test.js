@@ -1,6 +1,6 @@
 import React from 'react';
 import withReduxRouter from '../../utils/testUtils';
-import SingleDoc from '../../containers/docProfile/singleDoc';
+import SingleDoc from '../../containers/DocProfile/SingleDoc';
 
 
 describe('SingleDoc', function () {

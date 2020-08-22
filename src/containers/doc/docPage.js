@@ -9,10 +9,10 @@ import {
   handleCloseMenu, handleOpenMenu, setText, resizer,
 } from '../404/domlist';
 import style from './docs.module.css';
-import Doctor from '../../components/doctorCat';
-import Error from '../404/error-page';
+import Doctor from '../../components/DoctorCat';
+import Error from '../404/ErrorPage';
 import logo from '../../imgs/logo.png';
-import 'react-alice-carousel/lib/alice-carousel.css';
+import '../../../node_modules/react-alice-carousel/lib/alice-carousel.css';
 
 
 const mapStateToProps = state => ({

@@ -6,15 +6,14 @@ import { Elements } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import CheckoutForm from './checkout';
+import CheckoutForm from './Checkout';
 import { SETLOGIN, SETLOGOUT } from '../../actions/index';
 import { handleCloseMenu, handleOpenMenu, resizer } from '../404/domlist';
-import Error from '../404/error-page';
+import Error from '../404/ErrorPage';
 import style from './singledoc.module.css';
 import 'react-calendar/dist/Calendar.css';
-import styles from '../doc/docs.module.css';
+import styles from '../Doc/docs.module.css';
 import logo from '../../imgs/logo.png';
-
 
 const mapStateToProps = state => ({
   auth: state.auth,

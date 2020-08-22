@@ -8,9 +8,9 @@ import {
   SETAPPOINT, SETLOGIN, SETLOGOUT, DELAPPOINT,
 } from '../../actions/index';
 import logo from '../../imgs/logo.png';
-import Error from '../404/error-page';
+import Error from '../404/ErrorPage';
 import styles from './appoint.module.css';
-import style from '../doc/docs.module.css';
+import style from '../Doc/docs.module.css';
 
 
 const mapStateToProps = state => ({
