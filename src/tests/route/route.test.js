@@ -4,7 +4,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { render, cleanup } from '@testing-library/react';
 import rootReducer from '../../reducers/index';
-import Error from '../../containers/404/error-page';
+import Error from '../../containers/404/ErrorPage';
 import App from '../../components/app';
 
 
