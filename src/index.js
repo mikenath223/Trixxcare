@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers/index';
-import App from './components/App';
-import './styles/reset.css';
+import rootReducer from 'store/index';
+import App from 'App';
+import 'style/reset.css';
 
 
 const store = createStore(rootReducer);

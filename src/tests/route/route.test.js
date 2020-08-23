@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { render, cleanup } from '@testing-library/react';
 import rootReducer from '../../reducers/index';
 import Error from '../../containers/404/ErrorPage';
-import App from '../../components/app';
+import App from '../../App';
 
 
 afterEach(cleanup);
