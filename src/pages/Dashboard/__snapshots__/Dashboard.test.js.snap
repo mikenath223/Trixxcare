@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard page should match snapshot 1`] = `
+<div>
+  <div
+    class="containerLoad"
+  >
+    <img
+      alt=""
+      src="https://www.ecoloxtech.com/images/giphycolor.gif"
+    />
+  </div>
+</div>
+`;

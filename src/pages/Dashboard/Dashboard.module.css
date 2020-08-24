@@ -109,6 +109,7 @@
   left: 90px;
   bottom: 50px;
   z-index: 2;
+  outline: none;
 }
 
 .logo {

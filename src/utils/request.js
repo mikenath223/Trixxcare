@@ -152,23 +152,55 @@ export const getAppointments = (setAppoints, setIsLoaded, setErr) => {
 }
 
 /* 
-/ Util function to get user and appointments
+/ Util function to delete appointments
 */
-export const getUserAppoints = (setAuth, setAppoints, setIsLoaded, setErr, history, getAppointments) => {
-  fetch('https://trixxcare.herokuapp.com/api/currentuser', {
+export const setAppointment = (token, date, id, ret, setAlert,
+  alert, setShowpay, showPay, setDate) => {
+  fetch('https://trixxcare.herokuapp.com/api/appointments', {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
+      Authorization: `Bearer ${JSON.parse(token)}`,
     },
-  }).then(res => res.json())
-    .then(usr => {
-      setAuth({ isLogged: true, user: usr.user });
-      getAppointments(setAppoints, setIsLoaded, setErr);
-    })
-    .catch(() => {
-      history.push('/');
+    body: JSON.stringify({
+      date,
+      doctor_id: id,
+      location: ret.location,
+      doctor_name: ret.name,
+    }),
+  }).then(res => {
+    if (res.status !== 204) {
+      res.json().then(rep => {
+        setAlert({
+          ...alert,
+          message: rep.message,
+          load: true,
+          type: 'error',
+        });
+      });
+    }
+    else {
+      setAlert({
+        ...alert,
+        message: 'Appointment created!',
+        load: true,
+        type: 'success',
+      });
+      setShowpay({
+        ...showPay,
+        payBtn: true,
+      });
+    }
+    setDate('');
+  }).catch(e => {
+    setAlert({
+      ...alert,
+      message: e.message,
+      load: true,
+      type: 'error',
     });
+  });
 }
 
 /* 
@@ -210,4 +242,25 @@ export const deleteAppoints = (appId, setAlert, delAppoints) => {
       type: 'error',
     }));
   });
+}
+
+/* 
+/ Util function to get single caregiver
+*/
+export const getCaregiver = (id, setRet, setIsLoaded, setErr) => {
+  fetch(`https://trixxcare.herokuapp.com/api/doctors/${id}`, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
+    },
+  }).then(res => res.json())
+    .then(res => {
+      setRet(res);
+      setIsLoaded(true);
+    })
+    .catch(() => {
+      setIsLoaded(true);
+      setErr(true);
+    });
 }

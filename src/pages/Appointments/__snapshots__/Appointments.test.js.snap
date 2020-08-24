@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Appointments page should match snapshot 1`] = `
+<div>
+  <div
+    class="containerLoad container"
+  >
+    <img
+      alt=""
+      src="https://www.ecoloxtech.com/images/giphycolor.gif"
+    />
+    <h3
+      data-testid="check-appointment-route"
+    >
+      Appointments
+    </h3>
+  </div>
+</div>
+`;

@@ -7,13 +7,9 @@ import SmartSlider from 'react-smart-slider';
 import { SETLOGIN, SETLOGOUT, SETSIGNIN } from 'store/actions';
 import SignIn from 'components/Auth/SignIn';
 import SignUp from 'components/Auth/SignUp';
-import {
-  getToken, getCurrentUser,
-  registerUser
+import { getToken, getCurrentUser, registerUser
 } from 'utils/request';
-import {
-  showSignin, showRegister,
-  slideHeight,
+import {showSignin, showRegister, slideHeight,
 } from 'utils/domlist'
 import style from './Landing.module.css';
 

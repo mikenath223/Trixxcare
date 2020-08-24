@@ -1,9 +1,9 @@
 import React from 'react';
-import withReduxRouter from '../../utils/testUtils';
-import DocPage from '.';
+import withReduxRouter from 'utils/testUtils';
+import Dashboard from './index';
 
 
-describe('DocPage', function () {
+describe('Dashboard page', function () {
   beforeEach(() => {
     this.props = {
       match: {
@@ -15,7 +15,7 @@ describe('DocPage', function () {
   });
 
   it('should match snapshot', () => {
-    const { container } = withReduxRouter(<DocPage {...this.props} />);
+    const { container } = withReduxRouter(<Dashboard {...this.props} />);
 
     expect(container).toMatchSnapshot();
   });

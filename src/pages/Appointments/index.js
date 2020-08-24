@@ -1,12 +1,12 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import PropTypes from 'prop-types';
 import { handleCloseMenu, handleOpenMenu, resizer } from '../../utils/domlist';
-import { getAppointments, getUserAppoints, deleteAppoints } from 'utils/request';
+import { getAppointments, deleteAppoints } from 'utils/request';
 import {
-  SETAPPOINT, SETLOGIN, SETLOGOUT, DELAPPOINT,
+  SETAPPOINT, SETLOGOUT, DELAPPOINT,
 } from 'store/actions';
 import logo from 'assets/images/logo.png';
 import Error from 'pages/Error';
@@ -20,25 +20,25 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setAppoints: apps => dispatch(SETAPPOINT(apps)),
+  storeAppoints: apps => dispatch(SETAPPOINT(apps)),
   delAppoints: app => dispatch(DELAPPOINT(app)),
-  setAuth: stat => dispatch(SETLOGIN(stat)),
   setLogout: act => dispatch(SETLOGOUT(act)),
 });
 
 
 const Appointments = ({
-  auth, setAuth, setLogout, appoints, setAppoints, delAppoints,
+  auth, setLogout, appoints, storeAppoints, delAppoints,
 }) => {
   const [err, setErr] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [alert, setAlert] = useState({ load: false, message: '', type: '' });
 
-  const history = useHistory();
-
+  const history = useHistory()
+  
   const handleLogout = () => {
     setLogout();
     localStorage.removeItem('tok');
+    history.push('/')
   };
 
   const handleCancel = () => {
@@ -54,22 +54,14 @@ const Appointments = ({
     deleteAppoints(appId, setAlert, delAppoints);
   };
 
-  const runLocalstore = useCallback(() => {
-    getUserAppoints(setAuth, setAppoints, setIsLoaded, setErr, history);
-  }, [setAppoints, setAuth, history]);
-
   useEffect(() => {
-    if (auth.user) {
-      getAppointments(setAppoints, setIsLoaded, setErr);
+    if (localStorage.tok) {
+      getAppointments(storeAppoints, setIsLoaded, setErr);
       resizer();
-    } else if (localStorage.tok) {
-      runLocalstore();
-    } else {
-      history.push('/');
     }
 
     return setIsLoaded(false);
-  }, [auth.user, runLocalstore, setAuth, setAppoints, history]);
+  }, [auth.user, storeAppoints]);
 
 
   if (err) {
@@ -142,6 +134,7 @@ const Appointments = ({
             through our list of caregivers and make an appointment.
           </p>
         ) : null}
+
         <div className={styles.appBar}>
           <table className={styles.table}>
             <tbody className={styles.tableBody}>
@@ -205,10 +198,9 @@ Appointments.propTypes = {
     isLogged: PropTypes.bool,
     user: PropTypes.string,
   }),
-  setAuth: PropTypes.func.isRequired,
   setLogout: PropTypes.func.isRequired,
   appoints: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setAppoints: PropTypes.func.isRequired,
+  storeAppoints: PropTypes.func.isRequired,
   delAppoints: PropTypes.func.isRequired,
 };
 

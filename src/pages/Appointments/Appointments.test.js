@@ -1,8 +1,8 @@
 import React from 'react';
 import withReduxRouter from '../../utils/testUtils';
-import Appointments from '.';
+import Appointments from './index';
 
-describe('Appointments', function () {
+describe('Appointments page', function () {
   beforeEach(() => {
     this.props = {
       match: {

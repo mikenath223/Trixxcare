@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`404 page should match snapshot 1`] = `
+<div>
+  <div>
+    <nav
+      class="navbar"
+    >
+      <h2
+        data-testid="check-error-route"
+      >
+        404 Error
+      </h2>
+      <a
+        href="/"
+      >
+        <h2
+          class="homeLink"
+        >
+          trixxcare
+        </h2>
+      </a>
+    </nav>
+    <div
+      class="containers"
+    >
+      <img
+        alt=".."
+        class="image"
+        src="https://blog.thomasnet.com/hs-fs/hubfs/shutterstock_774749455.jpg?width=900&name=shutterstock_774749455.jpg"
+      />
+      <h1
+        class="h1"
+        data-testid="check-sor-route"
+      >
+        404 sor
+      </h1>
+      <a
+        class="homeBut"
+        href="/"
+      >
+        <button
+          class="button"
+          type="button"
+        >
+          Go Home
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+`;

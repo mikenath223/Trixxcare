@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import rootReducer from '../reducers/index';
+import rootReducer from 'store/index';
 
 const store = createStore(rootReducer);
 export const withReduxRendering = component => (

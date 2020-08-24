@@ -1,9 +1,9 @@
 import React from 'react';
 import withReduxRouter from '../../utils/testUtils';
-import SingleDoc from '.';
+import Caregiver from './index';
 
 
-describe('SingleDoc', function () {
+describe('Caregiver page', function () {
   beforeEach(() => {
     this.props = {
       match: {
@@ -16,7 +16,7 @@ describe('SingleDoc', function () {
 
   it('should match snapshot', () => {
     const { container } = withReduxRouter(
-      <SingleDoc {...this.props} />,
+      <Caregiver {...this.props} />,
     );
 
     expect(container).toMatchSnapshot();

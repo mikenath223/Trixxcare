@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Caregiver page should match snapshot 1`] = `
+<div>
+  <div
+    class="containerLoad container"
+  >
+    <img
+      alt=""
+      src="https://www.ecoloxtech.com/images/giphycolor.gif"
+    />
+  </div>
+</div>
+`;

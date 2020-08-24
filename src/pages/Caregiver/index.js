@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import CheckoutForm from '../../components/Checkout';
 import { SETLOGIN, SETLOGOUT } from 'store/actions';
 import { handleCloseMenu, handleOpenMenu, resizer } from 'utils/domlist';
+import { setAppointment, getCaregiver } from 'utils/request'
 import Error from 'pages/Error';
 import style from './Caregiver.module.css';
 import 'react-calendar/dist/Calendar.css';
@@ -27,7 +28,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const Caregiver = ({
-  match, docs, auth, setAuth, setLogout,
+  match, docs, auth, setLogout,
 }) => {
   const [err, setErr] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,27 +37,38 @@ const Caregiver = ({
   const [alert, setAlert] = useState({ load: false, message: '', type: '' });
   const [showPay, setShowpay] = useState({ payBtn: false, payForm: false });
 
-  const history = useHistory();
+  const token = localStorage.tok;
+  const id = match.params.doc.split('-')[1];
+
+  useEffect(() => {
+    if (localStorage.tok) {
+      getCaregiver(id, setRet, setIsLoaded, setErr);
+      };
+  }, [id])
+
+  useEffect(() => {
+    if (docs.length > 0) {
+      const filtered = docs.filter((el, ind) => ind + 1 === +id);
+      setRet(filtered[0]);
+      return setIsLoaded(true);
+    }
+    resizer();
+    return setIsLoaded(false);
+  }, [auth.user, docs, id]);
 
   const handleLogout = () => {
     setLogout();
     localStorage.removeItem('tok');
   };
 
-
   const handleCancel = () => {
     setAlert({ load: false, message: '' });
   };
 
-  const handleConfirmed = () => {
-    setAlert({ load: false, message: '' });
-  };
-
   const handleStripeCancel = () => {
-    setShowpay(prevState => ({
-      ...prevState,
+    setShowpay({...showPay,
       payForm: false,
-    }));
+    });
   };
 
   const handleChange = date => {
@@ -66,135 +78,31 @@ const Caregiver = ({
   };
 
   const handleClick = () => {
-    setAlert(prevState => ({
-      ...prevState,
+    setAlert({...alert,
       load: true,
       type: 'appoint',
-    }));
+    });
   };
 
   const handleTimeChange = e => {
     setDate(`${date.split(' ')[0]} ${e.target.value}`);
     document.querySelector('.createAppoint').disabled = false;
   };
-  const id = match.params.doc.split('-')[1];
 
 
   const handleSetAppoint = () => {
     if (date.length >= 15) {
-      fetch('https://trixxcare.herokuapp.com/api/appointments', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-        },
-        body: JSON.stringify({
-          date,
-          doctor_id: id,
-          location: ret.location,
-          doctor_name: ret.name,
-        }),
-      }).then(res => {
-        if (res.status !== 204) {
-          res.json().then(rep => {
-            setAlert(prevState => ({
-              ...prevState,
-              message: rep.message,
-              load: true,
-              type: 'error',
-            }));
-          });
-          setDate('');
-        } else {
-          setAlert(prevState => ({
-            ...prevState,
-            message: 'Appointment created!',
-            load: true,
-            type: 'success',
-          }));
-          setShowpay(prevState => ({
-            ...prevState,
-            payBtn: true,
-          }));
-          setDate('');
-        }
-      }).catch(e => {
-        setAlert(prevState => ({
-          ...prevState,
-          message: e.message,
-          load: true,
-          type: 'error',
-        }));
-      });
+      setAppointment(token, date, id, ret, setAlert, alert, 
+        setShowpay, showPay, setDate);
     }
   };
-
-
-  const getDoc = useCallback(
-    () => {
-      fetch(`https://trixxcare.herokuapp.com/api/doctors/${id}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-        },
-      }).then(res => res.json())
-        .then(res => {
-          setRet(res);
-          setIsLoaded(true);
-        })
-        .catch(() => {
-          setIsLoaded(true);
-          setErr(true);
-        });
-    }, [id],
-  );
-
-
-  const runLocalstore = useCallback(() => {
-    fetch('https://trixxcare.herokuapp.com/api/currentuser', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-      },
-    }).then(res => res.json())
-      .then(usr => {
-        setAuth({ isLogged: true, user: usr.user });
-        getDoc();
-      })
-      .catch(() => {
-      });
-  }, [setAuth, getDoc]);
 
   const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
   const handleShowPay = () => {
-    setShowpay(prevState => ({
-      ...prevState,
+    setShowpay({...showPay,
       payForm: true,
-    }));
+    });
   };
-
-
-  useEffect(() => {
-    if (auth.user && localStorage.tok) {
-      getDoc();
-    } else if (localStorage.tok && !auth.user) {
-      runLocalstore(setAuth);
-    } else {
-      history.push('/');
-    }
-    if (docs.length > 0) {
-      const filtered = docs.filter((el, ind) => ind + 1 === +id);
-      setRet(filtered[0]);
-      return setIsLoaded(true);
-    }
-    resizer();
-
-    return setIsLoaded(false);
-  }, [auth.user, docs, id, getDoc, history, runLocalstore, setAuth]);
-
 
   if (err) {
     return (
@@ -298,7 +206,7 @@ const Caregiver = ({
                 <Elements stripe={stripePromise}>
                   <CheckoutForm
                     SweetAlert={SweetAlert}
-                    handleConfirmed={handleConfirmed}
+                    handleConfirmed={handleCancel}
                     handleCancel={handleCancel}
                   />
                 </Elements>
@@ -338,7 +246,7 @@ const Caregiver = ({
               showCloseButton
               onCancel={handleCancel}
               showConfirm={false}
-              onConfirm={handleConfirmed}
+              onConfirm={handleCancel}
               title="Create Appointment"
             >
               <Calendar
@@ -365,7 +273,7 @@ const Caregiver = ({
             <SweetAlert
               success
               title="Appointment Created!"
-              onConfirm={handleConfirmed}
+              onConfirm={handleCancel}
               onCancel={handleCancel}
               timeout={2000}
             />
@@ -376,7 +284,7 @@ const Caregiver = ({
           <SweetAlert
             error
             title={alert.message}
-            onConfirm={handleConfirmed}
+            onConfirm={handleCancel}
             onCancel={handleCancel}
             timeout={3500}
           />
