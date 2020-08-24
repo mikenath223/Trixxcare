@@ -41,7 +41,7 @@ A health care delivery app built with the React and Redux frameworks coupled wit
 * Single Doctor details Page
 * Appointments Page
 
-<img src="src/imgs/screenshot.png"/>
+<img src="src/assets/images/screenshot.png"/>
 <!-- BUILT WITH -->
 
 # Built With
