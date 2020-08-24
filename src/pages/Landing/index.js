@@ -7,7 +7,14 @@ import SmartSlider from 'react-smart-slider';
 import { SETLOGIN, SETLOGOUT, SETSIGNIN } from 'store/actions';
 import SignIn from 'components/Auth/SignIn';
 import SignUp from 'components/Auth/SignUp';
-import { showRegister, showSignin, slideHeight } from 'utils/domlist';
+import {
+  getToken, getCurrentUser,
+  registerUser
+} from 'utils/request';
+import {
+  showSignin, showRegister,
+  slideHeight,
+} from 'utils/domlist'
 import style from './Landing.module.css';
 
 
@@ -25,11 +32,23 @@ const mapStateToProps = state => ({
 const Landing = ({
   setAuth, auth, setLogout, trigger, triggerShowSignin,
 }) => {
-  const [signinCred, setSigninCred] = useState({ username: '', pass: '' });
-  const [registerCred, setRegisterCred] = useState({ username: '', pass: '', confirmPass: '' });
+  const [signinCred, setSigninCred] = useState({ username: '', password: '' });
+  const [registerCred, setRegisterCred] = useState({ username: '', password: '', confirmPass: '' });
   const [load, setLoad] = useState(false);
   const [alert, setAlert] = useState({ load: false, message: '' });
 
+  useEffect(() => {
+    if (localStorage.tok) {
+      getCurrentUser(setAuth, setAlert);
+    }
+  }, [setAuth])
+
+  useEffect(() => {
+    slideHeight();
+    if (trigger.show) {
+      showSignin();
+    }
+  }, [trigger.show]);
 
   const handleLogout = () => {
     setLogout();
@@ -44,104 +63,30 @@ const Landing = ({
     setAlert({ load: false, message: '' });
   };
 
-  const getTok = (username, pass) => {
-    fetch('https://trixxcare.herokuapp.com/api/user_token', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        auth: {
-          username,
-          password: pass,
-        },
-      }),
-    })
-      .then(res => {
-        if (res.status === 201) {
-          res.json().then(tok => {
-            localStorage.setItem('tok', JSON.stringify(tok.jwt));
-            setAuth({ user: username, isLogged: true });
-            setLoad(false);
-            const modals = document.querySelectorAll('.modal');
-            const forms = document.querySelectorAll('.form');
-            forms.forEach(el => {
-              const elem = el;
-              elem.classList.remove('translate');
-              return '';
-            });
-            modals.forEach(el => {
-              const elem = el;
-              elem.style.visibility = 'hidden';
-              return '';
-            });
-            triggerShowSignin({ show: false });
-          });
-        } else {
-          setAlert(prevState => ({
-            ...prevState,
-            message: 'Username or password is incorrect!',
-            load: true,
-          }));
-          setLoad(false);
-        }
-      });
-  };
-
-
-  const handleRegSubmit = e => {
-    e.preventDefault();
-    setLoad(true);
-    fetch('https://trixxcare.herokuapp.com/api/users', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: registerCred.username,
-        password: registerCred.pass,
-      }),
-    })
-      .then(res => {
-        if (res.status !== 204) {
-          res.json().then(rep => {
-            setAlert(prevState => ({
-              ...prevState,
-              message: rep.message,
-              load: true,
-              type: 'error',
-            }));
-            setLoad(false);
-          });
-        } else {
-          getTok(registerCred.username, registerCred.pass);
-        }
-      })
-      .catch(() => {
-        setAlert(prevState => ({
-          ...prevState,
-          message: 'Unexpected error!',
-          load: true,
-          type: 'error',
-        }));
-        setLoad(false);
-      });
+  const handleSignInChange = e => {
+    const val = e.target.value;
+    switch (e.target.name) {
+      case ('username'):
+        setSigninCred({ ...signinCred, username: val });
+        break;
+      default:
+        setSigninCred({ ...signinCred, password: val });
+        break;
+    }
   };
 
   const handleRegChange = e => {
     const val = e.target.value;
     switch (e.target.name) {
       case ('username'):
-        setRegisterCred(prevState => ({ ...prevState, username: val }));
+        setRegisterCred({ ...registerCred, username: val });
         break;
       case ('password'):
-        setRegisterCred(prevState => ({ ...prevState, pass: val }));
+        setRegisterCred({ ...registerCred, password: val });
         break;
       default:
-        setRegisterCred(prevState => ({ ...prevState, confirmPass: val }));
-        if (registerCred.pass !== val) {
+        setRegisterCred({ ...registerCred, confirmPass: val });
+        if (registerCred.password !== val) {
           e.target.setCustomValidity('Password values must match!');
         } else {
           e.target.setCustomValidity('');
@@ -150,50 +95,21 @@ const Landing = ({
     }
   };
 
-  const handleSignInChange = e => {
-    const val = e.target.value;
-    switch (e.target.name) {
-      case ('username'):
-        setSigninCred(prevState => ({ ...prevState, username: val }));
-        break;
-      default:
-        setSigninCred(prevState => ({ ...prevState, pass: val }));
-        break;
-    }
+  const handleRegSubmit = e => {
+    e.preventDefault();
+    setLoad(true);
+    registerUser(registerCred.username,
+      registerCred.password,
+      triggerShowSignin, setAlert, setLoad, setSigninCred);
   };
 
   const handleSigninSubmit = e => {
     e.preventDefault();
     setLoad(true);
-    getTok(signinCred.username, signinCred.pass);
+    getToken(signinCred.username, signinCred.password,
+      triggerShowSignin, setAuth,
+      setAlert, setLoad);
   };
-
-
-  useEffect(() => {
-    if (localStorage.tok) {
-      fetch('https://trixxcare.herokuapp.com/api/currentuser', {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-        },
-      }).then(res => res.json())
-        .then(usr => {
-          setAuth({ isLogged: true, user: usr.user });
-        })
-        .catch(() => {
-          setAlert(prevState => ({
-            ...prevState,
-            message: 'Unexpected error!',
-            load: true,
-          }));
-        });
-    }
-    slideHeight();
-    if (trigger.show) {
-      showSignin();
-    }
-  }, [setAuth, trigger.show]);
 
   const slidesArray = [
     {
@@ -364,14 +280,12 @@ const Landing = ({
   );
 };
 
-
 Landing.defaultProps = {
   auth: PropTypes.shape({
     isLogged: false,
     user: '',
   }),
 };
-
 
 Landing.propTypes = {
   setAuth: PropTypes.func.isRequired,
