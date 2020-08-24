@@ -8,8 +8,9 @@ import { SETDOCTORS, SETSIGNIN, SETLOGOUT } from 'store/actions/index';
 import {
   handleCloseMenu, handleOpenMenu, setText, resizer,
 } from '../../utils/domlist';
+import {getCaregivers} from 'utils/request'
 import style from './Dashboard.module.css';
-import Doctor from '../../components/BoardItem';
+import Doctor from 'components/BoardItem';
 import Error from 'pages/Error';
 import logo from 'assets/images/logo.png';
 import '../../../node_modules/react-alice-carousel/lib/alice-carousel.css';
@@ -34,6 +35,17 @@ const Dashboard = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [alert, setAlert] = useState(false);
   const [filterdocs, setfilterdocs] = useState('');
+
+  useEffect(() => {
+    getCaregivers(setDocs, setIsLoaded, setErr, setText);
+    if (docs.length > 0) {
+      return setIsLoaded(true);
+    }
+    resizer();
+    return () => {
+      setIsLoaded(false);
+    };
+  }, [setDocs, docs.length]);
 
   const history = useHistory();
 
@@ -80,35 +92,6 @@ const Dashboard = ({
   };
 
   const logged = auth.isLogged || localStorage.tok;
-
-  useEffect(() => {
-    fetch('https://trixxcare.herokuapp.com/api/doctors', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(res => res.json())
-      .then(res => {
-        setDocs(res);
-        setIsLoaded(true);
-        setText();
-      })
-      .catch(() => {
-        setIsLoaded(true);
-        setErr(true);
-      });
-
-    if (docs.length > 0) {
-      return setIsLoaded(true);
-    }
-
-    resizer();
-
-    return () => {
-      setIsLoaded(false);
-    };
-  }, [setDocs, docs.length]);
-
 
   if (err) {
     return (

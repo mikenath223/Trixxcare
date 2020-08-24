@@ -1,0 +1,38 @@
+.sideBar {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 20%;
+  align-items: center;
+  min-height: 99vh;
+  box-shadow: 0 2px 2px 2px silver;
+}
+
+.sideBar a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 1030px) {
+  .sideBar {
+    width: 30%;
+  }
+}
+
+@media (max-width: 770px) {
+  .sideBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 40%;
+    background-color: #fff;
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .sideBar {
+    width: 70%;
+  }
+}

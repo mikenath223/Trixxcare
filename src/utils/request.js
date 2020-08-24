@@ -1,23 +1,9 @@
 /* 
- / Util function to get user token
+/ Util function to get user token
 */
-const tokenUrl = 'https://trixxcare.herokuapp.com/api/user_token';
-const params = (username, password) => ({
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    auth: {
-      username, password,
-    },
-  }),
-})
-
 export const getToken = (username, password, trigger,
   setAuth, setAlert, setLoad) => {
-  fetch(tokenUrl, params(username, password))
+  fetch('https://trixxcare.herokuapp.com/api/user_token', params(username, password))
     .then(res => {
       if (res.status === 201) {
         res.json().then(token =>
@@ -32,6 +18,19 @@ export const getToken = (username, password, trigger,
       setLoad(false);
     });
 };
+
+const params = (username, password) => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    auth: {
+      username, password,
+    },
+  }),
+})
 const saveToken = (token, username, setAuth, trigger) => {
   localStorage.setItem('tok', JSON.stringify(token.jwt));
   setAuth({ user: username, isLogged: true });
@@ -55,12 +54,11 @@ const hideForms = () => {
 
 
 /* 
- / Util function to register new user
+/ Util function to register new user
 */
-const userUrl = 'https://trixxcare.herokuapp.com/api/users'
 export const registerUser = (username, password,
   trigger, setAlert, setLoad, setSigninCred) => {
-  fetch(userUrl, params(username, password))
+  fetch('https://trixxcare.herokuapp.com/api/users', params(username, password))
     .then(res => {
       if (res.status !== 204) {
         res.json().then(rep => {
@@ -91,9 +89,8 @@ export const registerUser = (username, password,
 /* 
 / Util function to get current user
 */
-const currentUserUrl = 'https://trixxcare.herokuapp.com/api/currentuser'
 export const getCurrentUser = (setAuth, setAlert) => {
-  fetch(currentUserUrl, {
+  fetch('https://trixxcare.herokuapp.com/api/currentuser', {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -110,4 +107,107 @@ export const getCurrentUser = (setAuth, setAlert) => {
         load: true,
       }));
     });
+}
+
+/* 
+/ Util function to get caregivers
+*/
+export const getCaregivers = (setDocs, setIsLoaded, setErr, setText) => {
+  fetch('https://trixxcare.herokuapp.com/api/doctors', {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then(res => res.json())
+    .then(res => {
+      setDocs(res);
+      setIsLoaded(true);
+      setText();
+    })
+    .catch(() => {
+      setIsLoaded(true);
+      setErr(true);
+    });
+}
+
+/* 
+/ Util function to get user appointments
+*/
+export const getAppointments = (setAppoints, setIsLoaded, setErr) => {
+  fetch('https://trixxcare.herokuapp.com/api/appointments', {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
+    },
+  }).then(res => res.json())
+    .then(res => {
+      setAppoints(res);
+      setIsLoaded(true);
+    })
+    .catch(() => {
+      setIsLoaded(true);
+      setErr(true);
+    });
+}
+
+/* 
+/ Util function to get user and appointments
+*/
+export const getUserAppoints = (setAuth, setAppoints, setIsLoaded, setErr, history, getAppointments) => {
+  fetch('https://trixxcare.herokuapp.com/api/currentuser', {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
+    },
+  }).then(res => res.json())
+    .then(usr => {
+      setAuth({ isLogged: true, user: usr.user });
+      getAppointments(setAppoints, setIsLoaded, setErr);
+    })
+    .catch(() => {
+      history.push('/');
+    });
+}
+
+/* 
+/ Util function to delete appointments
+*/
+export const deleteAppoints = (appId, setAlert, delAppoints) => {
+  fetch(`https://trixxcare.herokuapp.com/api/appointments/${appId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
+    },
+  }).then(res => {
+    if (res.status !== 204) {
+      res.json().then(rep => {
+        setAlert(prevState => ({
+          ...prevState,
+          message: rep.message,
+          load: true,
+          type: 'error',
+        }));
+      });
+    }
+    else {
+      delAppoints(appId);
+      setAlert(prevState => ({
+        ...prevState,
+        message: 'Appointment deleted!',
+        load: true,
+        type: 'success',
+      }));
+    }
+  }).catch(e => {
+    setAlert(prevState => ({
+      ...prevState,
+      message: e.message,
+      load: true,
+      type: 'error',
+    }));
+  });
 }

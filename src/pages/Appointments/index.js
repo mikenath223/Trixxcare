@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import PropTypes from 'prop-types';
 import { handleCloseMenu, handleOpenMenu, resizer } from '../../utils/domlist';
+import { getAppointments, getUserAppoints, deleteAppoints } from 'utils/request';
 import {
   SETAPPOINT, SETLOGIN, SETLOGOUT, DELAPPOINT,
 } from 'store/actions';
@@ -50,92 +51,19 @@ const Appointments = ({
 
   const handleRemoveApp = e => {
     const appId = e.target.dataset.id;
-    fetch(`https://trixxcare.herokuapp.com/api/appointments/${appId}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-      },
-    }).then(res => {
-      if (res.status !== 204) {
-        res.json().then(rep => {
-          setAlert(prevState => ({
-            ...prevState,
-            message: rep.message,
-            load: true,
-            type: 'error',
-          }));
-        });
-      } else {
-        delAppoints(appId);
-        setAlert(prevState => ({
-          ...prevState,
-          message: 'Appointment deleted!',
-          load: true,
-          type: 'success',
-        }));
-      }
-    }).catch(e => {
-      setAlert(prevState => ({
-        ...prevState,
-        message: e.message,
-        load: true,
-        type: 'error',
-      }));
-    });
+    deleteAppoints(appId, setAlert, delAppoints);
   };
 
   const runLocalstore = useCallback(() => {
-    fetch('https://trixxcare.herokuapp.com/api/currentuser', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-      },
-    }).then(res => res.json())
-      .then(usr => {
-        setAuth({ isLogged: true, user: usr.user });
-        fetch('https://trixxcare.herokuapp.com/api/appointments', {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-          },
-        }).then(res => res.json())
-          .then(res => {
-            setAppoints(res);
-            setIsLoaded(true);
-          })
-          .catch(() => {
-            setIsLoaded(true);
-            setErr(true);
-          });
-      })
-      .catch(() => {
-      });
-  }, [setAppoints, setAuth]);
+    getUserAppoints(setAuth, setAppoints, setIsLoaded, setErr, history);
+  }, [setAppoints, setAuth, history]);
 
   useEffect(() => {
     if (auth.user) {
-      fetch('https://trixxcare.herokuapp.com/api/appointments', {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${JSON.parse(localStorage.tok)}`,
-        },
-      }).then(res => res.json())
-        .then(res => {
-          setAppoints(res);
-          setIsLoaded(true);
-          resizer();
-        })
-        .catch(() => {
-          setIsLoaded(true);
-          setErr(true);
-        });
-    } else if (!auth.user && localStorage.tok) {
-      runLocalstore(setAuth);
+      getAppointments(setAppoints, setIsLoaded, setErr);
+      resizer();
+    } else if (localStorage.tok) {
+      runLocalstore();
     } else {
       history.push('/');
     }
@@ -157,6 +85,7 @@ const Appointments = ({
       </div>
     );
   }
+
   return (
     <div className={`${style.container} ${styles.container}`}>
       <div className={`${style.sideBar} ${styles.sideBar} sideBar`}>
