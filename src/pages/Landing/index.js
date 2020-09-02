@@ -96,7 +96,7 @@ const Landing = ({
     setLoad(true);
     registerUser(registerCred.username,
       registerCred.password,
-      triggerShowSignin, setAlert, setLoad, setSigninCred);
+      triggerShowSignin, setAlert, setLoad, setSigninCred, setAuth);
   };
 
   const handleSigninSubmit = e => {

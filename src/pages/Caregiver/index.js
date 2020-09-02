@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import CheckoutForm from '../../components/Checkout';
-import { SETLOGIN, SETLOGOUT } from 'store/actions';
+import { SETLOGOUT } from 'store/actions';
 import { handleCloseMenu, handleOpenMenu, resizer } from 'utils/domlist';
 import { setAppointment, getCaregiver } from 'utils/request'
 import Error from 'pages/Error';
@@ -22,7 +22,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setAuth: stat => dispatch(SETLOGIN(stat)),
   setLogout: act => dispatch(SETLOGOUT(act)),
 });
 

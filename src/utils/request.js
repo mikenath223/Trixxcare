@@ -3,7 +3,11 @@
 */
 export const getToken = (username, password, trigger,
   setAuth, setAlert, setLoad) => {
-  fetch('https://trixxcare.herokuapp.com/api/user_token', params(username, password))
+  fetch('https://trixxcare.herokuapp.com/api/v1/user_token', params({
+    auth: {
+      username, password,
+    },
+  }))
     .then(res => {
       if (res.status === 201) {
         res.json().then(token =>
@@ -19,17 +23,13 @@ export const getToken = (username, password, trigger,
     });
 };
 
-const params = (username, password) => ({
+const params = (paramsBody) => ({
   method: 'POST',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify({
-    auth: {
-      username, password,
-    },
-  }),
+  body: JSON.stringify(paramsBody),
 })
 const saveToken = (token, username, setAuth, trigger) => {
   localStorage.setItem('tok', JSON.stringify(token.jwt));
@@ -57,8 +57,10 @@ const hideForms = () => {
 / Util function to register new user
 */
 export const registerUser = (username, password,
-  trigger, setAlert, setLoad, setSigninCred) => {
-  fetch('https://trixxcare.herokuapp.com/api/users', params(username, password))
+  trigger, setAlert, setLoad, setSigninCred, setAuth) => {
+  fetch('https://trixxcare.herokuapp.com/api/v1/users', params({
+    username, password,
+  }))
     .then(res => {
       if (res.status !== 204) {
         res.json().then(rep => {
@@ -71,7 +73,8 @@ export const registerUser = (username, password,
           setLoad(false);
         });
       } else {
-        getToken(username, password, trigger);
+        getToken(username, password, trigger,
+          setAuth, setAlert, setLoad);
         setSigninCred({ username: '', password: '' })
       }
     })
@@ -90,7 +93,7 @@ export const registerUser = (username, password,
 / Util function to get current user
 */
 export const getCurrentUser = (setAuth, setAlert) => {
-  fetch('https://trixxcare.herokuapp.com/api/currentuser', {
+  fetch('https://trixxcare.herokuapp.com/api/v1/currentuser', {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -113,7 +116,7 @@ export const getCurrentUser = (setAuth, setAlert) => {
 / Util function to get caregivers
 */
 export const getCaregivers = (setDocs, setIsLoaded, setErr, setText) => {
-  fetch('https://trixxcare.herokuapp.com/api/doctors', {
+  fetch('https://trixxcare.herokuapp.com/api/v1/doctors', {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -131,10 +134,10 @@ export const getCaregivers = (setDocs, setIsLoaded, setErr, setText) => {
 }
 
 /* 
-/ Util function to get user appointments
+/ Util function to get all current user appointments
 */
 export const getAppointments = (setAppoints, setIsLoaded, setErr) => {
-  fetch('https://trixxcare.herokuapp.com/api/appointments', {
+  fetch('https://trixxcare.herokuapp.com/api/v1/appointments', {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -152,11 +155,11 @@ export const getAppointments = (setAppoints, setIsLoaded, setErr) => {
 }
 
 /* 
-/ Util function to delete appointments
+/ Util function to set appointments
 */
 export const setAppointment = (token, date, id, ret, setAlert,
   alert, setShowpay, showPay, setDate) => {
-  fetch('https://trixxcare.herokuapp.com/api/appointments', {
+  fetch('https://trixxcare.herokuapp.com/api/v1/appointments', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -207,7 +210,7 @@ export const setAppointment = (token, date, id, ret, setAlert,
 / Util function to delete appointments
 */
 export const deleteAppoints = (appId, setAlert, delAppoints) => {
-  fetch(`https://trixxcare.herokuapp.com/api/appointments/${appId}`, {
+  fetch(`https://trixxcare.herokuapp.com/api/v1/appointments/${appId}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
@@ -248,7 +251,7 @@ export const deleteAppoints = (appId, setAlert, delAppoints) => {
 / Util function to get single caregiver
 */
 export const getCaregiver = (id, setRet, setIsLoaded, setErr) => {
-  fetch(`https://trixxcare.herokuapp.com/api/doctors/${id}`, {
+  fetch(`https://trixxcare.herokuapp.com/api/v1/doctors/${id}`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

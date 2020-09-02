@@ -13,7 +13,7 @@ const SignUp = ({ handleRegChange, handleRegSubmit, load }) => (
         Username
         {' '}
         <br />
-        <input type="text" name="username" maxLength="10" onChange={handleRegChange} required />
+        <input type="text" name="username" onChange={handleRegChange} required />
       </label>
 
       <label htmlFor="password" className={style.label}>
