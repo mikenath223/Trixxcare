@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
@@ -8,13 +7,14 @@ import Calendar from 'react-calendar';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import CheckoutForm from '../../components/Checkout';
 import { SETLOGOUT } from 'store/actions';
-import { handleCloseMenu, handleOpenMenu, resizer } from 'utils/domlist';
-import { setAppointment, getCaregiver } from 'utils/request'
+import { handleOpenMenu, resizer } from 'utils/domlist';
+import { setAppointment, getCaregiver } from 'utils/request';
+import SideBar from 'components/SideBar';
+import Footer from 'components/Footer';
 import Error from 'pages/Error';
 import style from './Caregiver.module.css';
 import 'react-calendar/dist/Calendar.css';
 import styles from 'pages/Dashboard/Dashboard.module.css';
-import logo from 'assets/images/logo.png';
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -115,47 +115,19 @@ const Caregiver = ({
       </div>
     );
   }
+
+  const logged = auth.isLogged || localStorage.tok;
+
   return (
     <div className={`${styles.container} ${style.container}`}>
       <h3 data-testid="check-home-route">Categories</h3>
-      <div className={`${styles.sideBar} ${style.sideBar} sideBar`}>
-        <div role="button" tabIndex="1" onClick={handleCloseMenu} onKeyDown={() => {}} className={`${style.closeWrap} ${style.menuWrap}`}>
-          <img src="https://img.icons8.com/color/30/000000/close-window.png" className={style.closeMenu} alt="" />
-        </div>
-        <p className={styles.user}>
-          <img src="https://img.icons8.com/windows/35/000000/user-male-circle.png" alt="" />
-          {' '}
-          { auth.user && auth.user.substring(0, 7)}
-        </p>
-        <Link to="/">
-          <img className={styles.logo} src={logo} alt="" />
-        </Link>
-        <div className={styles.midBar}>
-          <p>
-            {' '}
-            <Link to="/doctors">CAREGIVER</Link>
-          </p>
-          <p>
-            {' '}
-            <Link to="/appointments">APPOINTMENTS</Link>
-          </p>
-        </div>
-
-        <footer className={styles.sideFoot}>
-          <button type="button" onClick={handleLogout}>Logout</button>
-          <p>
-            {' '}
-            <a href="https://github.com/mikenath223/trixxcare/issues" target="_blank" rel="noopener noreferrer">Help</a>
-          </p>
-          <p>
-            <img src="https://img.icons8.com/android/24/000000/twitter.png" alt="" />
-            <img src="https://img.icons8.com/android/24/000000/facebook-new.png" alt="" />
-            <img src="https://img.icons8.com/android/24/000000/google-plus.png" alt="" />
-            <img src="https://img.icons8.com/material/24/000000/vimeo.png" alt="" />
-            <img src="https://img.icons8.com/metro/24/000000/pinterest.png" alt="" />
-          </p>
-        </footer>
-      </div>
+      <SideBar
+        auth={auth}
+        logged={logged}>
+        <Footer
+          handleLogout={handleLogout}
+          logged={logged} />
+      </SideBar>
 
       <div className={`${styles.slideWrap} ${style.slideWrap}`}>
         <div className={style.imgWrap}>
