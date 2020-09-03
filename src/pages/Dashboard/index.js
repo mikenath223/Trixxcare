@@ -6,8 +6,8 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import AliceCarousel from 'react-alice-carousel';
 import { SETDOCTORS, SETSIGNIN, SETLOGOUT } from 'store/actions/index';
 import { handleOpenMenu, setText, resizer } from 'utils/domlist';
-import { getCaregivers } from 'utils/request'
-import Sidebar from 'components/Sidebar';
+import { getCaregivers } from 'utils/request';
+import SideBar from 'components/SideBar';
 import Footer from 'components/Footer';
 import style from './Dashboard.module.css';
 import Doctor from 'components/BoardItem';
@@ -111,14 +111,14 @@ const Dashboard = ({
   };
 
   return <div className={style.container}>
-    <Sidebar
+    <SideBar
       auth={auth}
       logged={logged}>
       <Footer
         handleLogout={handleLogout}
         logged={logged}
         handleConfirmed={handleConfirmed} />
-    </Sidebar>
+    </SideBar>
     <div className={style.slideWrap}>
       <div className={style.menuWrap} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleOpenMenu}>
         <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />

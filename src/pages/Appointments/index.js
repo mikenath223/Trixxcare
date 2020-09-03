@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import PropTypes from 'prop-types';
-import { handleCloseMenu, handleOpenMenu, resizer } from '../../utils/domlist';
+import { handleOpenMenu, resizer } from '../../utils/domlist';
 import { getAppointments, deleteAppoints } from 'utils/request';
 import {
   SETAPPOINT, SETLOGOUT, DELAPPOINT,
 } from 'store/actions';
-import logo from 'assets/images/logo.png';
+import SideBar from 'components/SideBar';
+import Footer from 'components/Footer';
 import Error from 'pages/Error';
 import styles from './Appointments.module.css';
 import style from 'pages/Dashboard/Dashboard.module.css';
@@ -34,7 +35,7 @@ const Appointments = ({
   const [alert, setAlert] = useState({ load: false, message: '', type: '' });
 
   const history = useHistory()
-  
+
   const handleLogout = () => {
     setLogout();
     localStorage.removeItem('tok');
@@ -78,47 +79,18 @@ const Appointments = ({
     );
   }
 
+  const logged = auth.isLogged || localStorage.tok;
+
   return (
     <div className={`${style.container} ${styles.container}`}>
-      <div className={`${style.sideBar} ${styles.sideBar} sideBar`}>
-        <h3 data-testid="check-appointment-route">Appointments</h3>
-        <div tabIndex="0" role="button" onKeyDown={() => { }} onClick={handleCloseMenu} className={`${styles.closeWrap} ${styles.menuWrap}`}>
-          <img src="https://img.icons8.com/color/30/000000/close-window.png" className={styles.closeMenu} alt="" />
-        </div>
-        <p className={styles.user}>
-          <img src="https://img.icons8.com/windows/35/000000/user-male-circle.png" alt="" />
-          {' '}
-          {auth.user && auth.user.substring(0, 7)}
-        </p>
-        <Link to="/">
-          <img className={style.logo} src={logo} alt="" />
-        </Link>
-        <div className={`${style.midBar} ${styles.midBar}`}>
-          <p>
-            {' '}
-            <Link to="/doctors">CAREGIVERS</Link>
-          </p>
-          <p>
-            {' '}
-            <Link to="/appointments">APPOINTMENTS</Link>
-          </p>
-        </div>
-
-        <footer className={style.sideFoot}>
-          <button type="button" onClick={handleLogout}>Logout</button>
-          <p>
-            {' '}
-            <a href="https://github.com/mikenath223/trixxcare/issues" target="_blank" rel="noopener noreferrer">Help</a>
-          </p>
-          <p>
-            <img src="https://img.icons8.com/android/24/000000/twitter.png" alt="" />
-            <img src="https://img.icons8.com/android/24/000000/facebook-new.png" alt="" />
-            <img src="https://img.icons8.com/android/24/000000/google-plus.png" alt="" />
-            <img src="https://img.icons8.com/material/24/000000/vimeo.png" alt="" />
-            <img src="https://img.icons8.com/metro/24/000000/pinterest.png" alt="" />
-          </p>
-        </footer>
-      </div>
+      <SideBar
+        auth={auth}
+        logged={logged}>
+        <Footer
+          handleLogout={handleLogout}
+          logged={logged}
+          handleConfirmed={handleConfirmed} />
+      </SideBar>
 
       <div className={styles.mainBar}>
         <div role="button" tabIndex="0" onKeyDown={() => { }} className={styles.menuWrap} onClick={handleOpenMenu}>

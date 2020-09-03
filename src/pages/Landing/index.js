@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import SmartSlider from 'react-smart-slider';
 import { SETLOGIN, SETLOGOUT, SETSIGNIN } from 'store/actions';
-import SignIn from 'components/Auth/SignIn';
-import SignUp from 'components/Auth/SignUp';
+import SignIn from 'components/SignIn';
+import SignUp from 'components/SignUp';
 import { getToken, getCurrentUser, registerUser
 } from 'utils/request';
 import {showSignin, showRegister, slideHeight,
