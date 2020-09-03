@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import style from './Sidebar.module.css';
-import { ReactComponent as logo } from 'assets/images/logo.png';
+import Logo from 'assets/images/logo.png';
 import { handleCloseMenu } from 'utils/domlist';
 
 const Sidebar = ({ auth, children, logged }) => (
-  <div className={style.sideBar}>
-    <div onClick={handleCloseMenu} role="button" tabIndex="0" onKeyDown={() => { }} className={`${style.closeWrap} ${style.menuWrap}`}>
+  <div className={style.sideBar + ' sideBar'}>
+    <div onClick={handleCloseMenu} role="button" tabIndex="1" onKeyDown={() => { }} className={`${style.closeWrap} ${style.menuWrap}`}>
       <img src="https://img.icons8.com/color/30/000000/close-window.png" className={style.closeMenu} alt="" />
     </div>
     <p className={style.user}>
@@ -15,7 +15,7 @@ const Sidebar = ({ auth, children, logged }) => (
       {auth.user && auth.user.substring(0, 7)}
     </p>
     <Link to="/">
-      <img className={style.logo} src={logo} alt="" />
+      <img className={style.logo} src={Logo} alt="" />
     </Link>
     <div className={style.midBar}>
       <p>
@@ -24,7 +24,7 @@ const Sidebar = ({ auth, children, logged }) => (
       {logged ? (
         <p>
           {' '}
-          <Link to="/appointments">APPOINTMENTS</Link>
+          <Link to="/appointments" tabIndex="2">APPOINTMENTS</Link>
         </p>
       ) : null}
     </div>
