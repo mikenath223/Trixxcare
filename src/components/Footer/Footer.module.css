@@ -26,7 +26,3 @@
   justify-content: space-around;
   cursor: pointer;
 }
-
-.sideFoot p:nth-child(2) {
-  margin-top: -20px;
-}

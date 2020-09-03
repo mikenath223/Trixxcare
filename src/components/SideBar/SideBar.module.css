@@ -48,53 +48,11 @@
   margin-bottom: 25px;
 }
 
-.sideFoot {
-  height: 200px;
-  width: 100%;
-  text-align: center;
-  position: relative;
-  font-size: 25px;
-  color: rgba(0, 0, 0, 0.9);
-}
-
-.sideFoot button {
-  border: none;
-  outline: none;
-  font-size: 22px;
-  font-weight: 600;
-  background-color: #fff;
-  color: inherit;
-  margin-bottom: 50px;
-  cursor: pointer;
-}
-
-.sideFoot p:last-child {
-  position: absolute;
-  bottom: 10px;
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  cursor: pointer;
-}
-
-.sideFoot p:nth-child(2) {
-  margin-top: -20px;
-}
-
 @media (max-width: 1030px) {
   .sideBar {
     width: 30%;
   }
 }
-
-/* 
-.menuIcon, .closeMenu {
-  display: none;
-} 
-.menuWrap {
-  width: min-content;
-}
-*/
 
 @media (max-width: 750px) {
   .sideBar {

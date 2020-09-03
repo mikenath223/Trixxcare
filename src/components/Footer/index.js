@@ -3,8 +3,8 @@ import style from './Footer.module.css';
 
 const Footer = ({ handleLogout, logged, handleConfirmed }) => (
   <footer className={style.sideFoot}>
-    {logged ? <button type="button" href="#" onClick={handleLogout} tabIndex="3">Logout</button> : 
-    <button type="button" href="#" onClick={handleConfirmed} tabIndex="4">Sign In</button>}
+    {logged ? <button type="button" onClick={handleLogout} tabIndex="3">Logout</button> : 
+    <button type="button" onClick={handleConfirmed} tabIndex="4">Sign In</button>}
     <p>
       {' '}
       <a href="https://github.com/mikenath223/trixxcare/issues" target="_blank" rel="noopener noreferrer" tabIndex="5">Help</a>
