@@ -40,10 +40,10 @@ const Landing = ({
   }, [setAuth])
 
   useEffect(() => {
-    slideHeight();
     if (trigger.show) {
       showSignin();
     }
+    slideHeight();
   }, [trigger.show]);
 
   const handleLogout = () => {

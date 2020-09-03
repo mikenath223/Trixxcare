@@ -61,7 +61,7 @@
 
 .midBar p:first-child {
   background-color: #99C210;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
 }
 
 .sideFoot {
@@ -85,7 +85,7 @@
   font-weight: 600;
   background-color: #fff;
   color: inherit;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   cursor: pointer;
 }
 
