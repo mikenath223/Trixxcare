@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import style from './Footer.module.css';
 
 const Footer = ({ handleLogout, logged, handleConfirmed }) => (
   <footer className={style.sideFoot}>
-    {logged ? <button type="button" onClick={handleLogout} tabIndex="3">Logout</button>
-      : <button type="button" onClick={handleConfirmed} tabIndex="4">Sign In</button>}
+    {logged ? <button type="button" onClick={handleLogout} tabIndex="-3">Logout</button>
+      : <button type="button" onClick={handleConfirmed} tabIndex="-4">Sign In</button>}
     <p>
       {' '}
-      <a href="https://github.com/mikenath223/trixxcare/issues" target="_blank" rel="noopener noreferrer" tabIndex="5">Help</a>
+      <a href="https://github.com/mikenath223/trixxcare/issues" target="_blank" rel="noopener noreferrer" tabIndex="-5">Help</a>
     </p>
     <p>
       <img src="https://img.icons8.com/android/24/000000/twitter.png" alt="" />
@@ -18,5 +19,11 @@ const Footer = ({ handleLogout, logged, handleConfirmed }) => (
     </p>
   </footer>
 );
+
+Footer.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+  logged: PropTypes.string.isRequired,
+  handleConfirmed: PropTypes.func.isRequired,
+};
 
 export default Footer;

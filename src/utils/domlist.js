@@ -1,3 +1,20 @@
+const hideForms = e => {
+  const modals = document.querySelectorAll('.modal');
+  const forms = document.querySelectorAll('.form');
+  modals.forEach(el => {
+    if (e.target === el) {
+      const elem = el;
+      elem.style.visibility = 'hidden';
+      forms.forEach(fr => {
+        const form = fr;
+        form.style.transform = 'translateY(-100%)';
+        form.style.opacity = 0;
+        return '';
+      });
+    }
+  });
+};
+
 const showRegisterForm = () => {
   const form = document.querySelector('.reg-form');
   const regModal = document.querySelector('.reg-modal');
@@ -18,23 +35,6 @@ const showSigninForm = () => {
     form.style.transform = 'translateY(-100%)';
     form.style.opacity = 0;
   };
-};
-
-const hideForms = e => {
-  const modals = document.querySelectorAll('.modal');
-  const forms = document.querySelectorAll('.form');
-  modals.forEach(el => {
-    if (e.target === el) {
-      const elem = el;
-      elem.style.visibility = 'hidden';
-      forms.forEach(fr => {
-        const form = fr;
-        form.style.transform = 'translateY(-100%)';
-        form.style.opacity = 0;
-        return '';
-      });
-    }
-  });
 };
 
 const showRegister = () => {

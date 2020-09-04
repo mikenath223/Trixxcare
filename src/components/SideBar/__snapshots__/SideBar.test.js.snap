@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideBar should match snapshot 1`] = `
+<div>
+  <div
+    class="sideBar sideBar"
+  >
+    <button
+      class="closeWrap menuWrap"
+      type="button"
+    >
+      <img
+        alt=""
+        class="closeMenu"
+        src="https://img.icons8.com/color/30/000000/close-window.png"
+      />
+    </button>
+    <p
+      class="user"
+    >
+       
+    </p>
+    <a
+      href="/"
+    >
+      <img
+        alt=""
+        class="logo"
+        src="logo.png"
+      />
+    </a>
+    <div
+      class="midBar"
+    >
+      <p>
+        <a
+          href="/doctors"
+        >
+          CAREGIVER
+        </a>
+      </p>
+    </div>
+    
+  </div>
+</div>
+`;

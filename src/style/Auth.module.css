@@ -1,9 +1,8 @@
 .form {
   display: flex;
   flex-flow: column wrap;
-  width: 85%;
-  max-width: 400px;
-  height: 630px;
+  width: min(85%, 350px);
+  min-height: 530px;
   justify-content: space-around;
   align-items: center;
   margin: 20px auto;
@@ -54,7 +53,7 @@
   color: gray;
   text-align: center;
   padding-top: 30px;
-  margin: -16px 0 20px;
+  margin: -22px 0 20px;
   height: 55px;
   font-size: 40px;
   width: 100%;
@@ -85,11 +84,6 @@ label {
   font-size: 25px;
   font-weight: 700;
   cursor: pointer;
-}
-
-.signBut {
-  margin-bottom: 120px;
-  display: inline-block;
 }
 
 @media (max-width: 430px) {

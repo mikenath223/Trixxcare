@@ -57,6 +57,7 @@
 .docName,
 .docDet {
   margin-top: 20px;
+  font-size: 18px;
 }
 
 .image {
@@ -68,11 +69,6 @@
 .docWrap p:last-child {
   margin-top: 10px;
   opacity: 0.5;
-}
-
-.docName,
-.docDet {
-  font-size: 18px;
 }
 
 .docName {
@@ -98,7 +94,7 @@
   height: 50px;
   border-radius: 25px;
   transition: all 1s;
-  margin: 30px auto 35px auto;
+  margin: 15px auto 35px auto;
   border: 1.5px solid rgba(0, 0, 255, 0.7);
 }
 
@@ -128,8 +124,8 @@
 }
 
 @media (max-width: 770px) {
-  .slideWrap {
-    width: 100%;
+  :global .slideWrap {
+    width: 95%;
   }
 
   .overlay {
@@ -140,12 +136,9 @@
   .menuIcon {
     display: initial;
     cursor: pointer;
-  }
-
-  .menuIcon {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 21px;
+    left: 18px;
   }
 }
 

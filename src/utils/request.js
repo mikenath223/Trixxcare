@@ -22,36 +22,6 @@ export const getToken = (username, password, trigger,
     });
 };
 
-const params = paramsBody => ({
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(paramsBody),
-});
-const saveToken = (token, username, setAuth, trigger) => {
-  localStorage.setItem('tok', JSON.stringify(token.jwt));
-  setAuth({ user: username, isLogged: true });
-  hideForms();
-  trigger({ show: false });
-};
-const hideForms = () => {
-  const modals = document.querySelectorAll('.modal');
-  const forms = document.querySelectorAll('.form');
-  forms.forEach(el => {
-    const elem = el;
-    elem.classList.remove('translate');
-    return '';
-  });
-  modals.forEach(el => {
-    const elem = el;
-    elem.style.visibility = 'hidden';
-    return '';
-  });
-};
-
-
 /*
 / Util function to register new user
 */
@@ -263,4 +233,33 @@ export const getCaregiver = (id, setRet, setIsLoaded, setErr) => {
       setIsLoaded(true);
       setErr(true);
     });
+};
+
+const params = paramsBody => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(paramsBody),
+});
+const saveToken = (token, username, setAuth, trigger) => {
+  localStorage.setItem('tok', JSON.stringify(token.jwt));
+  setAuth({ user: username, isLogged: true });
+  hideForms();
+  trigger({ show: false });
+};
+const hideForms = () => {
+  const modals = document.querySelectorAll('.modal');
+  const forms = document.querySelectorAll('.form');
+  forms.forEach(el => {
+    const elem = el;
+    elem.classList.remove('translate');
+    return '';
+  });
+  modals.forEach(el => {
+    const elem = el;
+    elem.style.visibility = 'hidden';
+    return '';
+  });
 };

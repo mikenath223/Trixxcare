@@ -5,6 +5,7 @@ import {
 import { connect } from 'react-redux';
 import { SETLOGIN, SETSIGNIN } from 'store/actions';
 import { getCurrentUser } from 'utils/request';
+import PropTypes from 'prop-types';
 import HomePage from 'pages/Landing';
 import DocPage from 'pages/Dashboard';
 import SingleDoc from 'pages/Caregiver';
@@ -56,6 +57,11 @@ const App = ({ setAuth, triggerShowSignin }) => {
       </Switch>
     </BrowserRouter>
   );
+};
+
+App.propTypes = {
+  setAuth: PropTypes.func.isRequired,
+  triggerShowSignin: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(App);

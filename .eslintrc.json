@@ -19,6 +19,8 @@
       "no-shadow": "off",
       "react/jsx-props-no-spreading": "off",
       "func-names": "off",
+      "no-use-before-define": "off",
+      "import/no-extraneous-dependencies": "off", 
       "arrow-parens": ["error", "as-needed"]
     }
   }

@@ -135,9 +135,9 @@ const Caregiver = ({
 
       <div className={`${style.slideWrap} slideWrap`}>
         <div className={style.imgWrap}>
-          <div className={style.menuWrap} role="button" tabIndex="2" onKeyDown={() => {}} onClick={handleOpenMenu}>
+          <button className={style.menuWrap} type="button" tabIndex="-6" onKeyDown={() => {}} onClick={handleOpenMenu}>
             <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
-          </div>
+          </button>
           <img src={ret.image} alt="doctor" />
         </div>
         <div className={style.rightBar}>
