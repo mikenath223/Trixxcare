@@ -1,4 +1,4 @@
-import docs from '../../reducers/docs';
+import docs from 'store/reducers/docs';
 
 
 describe('Docs Reducer', () => {

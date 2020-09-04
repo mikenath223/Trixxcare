@@ -2,20 +2,28 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const BoardItem = ({ doc, style }) => (
-  <div className={style.docWrap} onDragStart={e => e.preventDefault}>
-    <Link to={`doctors/${doc.name}-${doc.id}`}>
-      <img className={style.image} src={doc.image} alt="doctor" />
-      <p className={style.docName}>{doc.name}</p>
-      <p className={style.docDet}>{doc.details.split('|')[0]}</p>
-      <p>
-        <img src="https://img.icons8.com/carbon-copy/30/000000/facebook-circled.png" alt="" />
-        <img src="https://img.icons8.com/wired/30/000000/twitter-circled.png" alt="" />
-        <img src="https://img.icons8.com/carbon-copy/30/000000/filled-message.png" alt="" />
-      </p>
-    </Link>
-  </div>
-);
+const BoardItem = ({
+  doc: {
+    image, name, id, details,
+  }, style,
+}) => {
+  const preventDrag = e => e.preventDefault();
+
+  return (
+    <div className={style.docWrap} onDragStart={preventDrag}>
+      <Link to={`doctors/${name}-${id}`}>
+        <img className={style.image} src={image} alt="doctor" />
+        <p className={style.docName}>{name}</p>
+        <p className={style.docDet}>{details.split('|')[0]}</p>
+        <p>
+          <img src="https://img.icons8.com/carbon-copy/30/000000/facebook-circled.png" alt="" />
+          <img src="https://img.icons8.com/wired/30/000000/twitter-circled.png" alt="" />
+          <img src="https://img.icons8.com/carbon-copy/30/000000/filled-message.png" alt="" />
+        </p>
+      </Link>
+    </div>
+  );
+};
 
 BoardItem.propTypes = {
   doc: PropTypes.shape({

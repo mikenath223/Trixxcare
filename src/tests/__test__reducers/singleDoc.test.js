@@ -1,4 +1,4 @@
-import singleDoc from '../../reducers/singleDoc';
+import singleDoc from 'store/reducers/singleDoc';
 
 
 describe('Single Doctor Reducer', () => {

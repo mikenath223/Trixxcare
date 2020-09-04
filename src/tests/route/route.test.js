@@ -9,7 +9,7 @@ test('landing page rendering or navigation', () => {
   const { getByTestId } = withReduxRouter(
     <MemoryRouter>
       <App />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
   expect(getByTestId('check-home-route').textContent).toBe('Landing Page');
@@ -19,7 +19,7 @@ test('making a bad 404 route request', () => {
   const { getByTestId } = withReduxRouter(
     <MemoryRouter>
       <Error />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
   expect(getByTestId('check-error-route').textContent).toBe('404 Error');

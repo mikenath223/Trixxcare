@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Switch, Redirect,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { SETLOGIN, SETSIGNIN } from 'store/actions';
-import { getCurrentUser } from 'utils/request'
+import { getCurrentUser } from 'utils/request';
 import HomePage from 'pages/Landing';
 import DocPage from 'pages/Dashboard';
 import SingleDoc from 'pages/Caregiver';
@@ -25,22 +27,22 @@ const App = ({ setAuth, triggerShowSignin }) => {
   useEffect(() => {
     if (notAuth) {
       triggerShowSignin({ show: true });
-      setIsNotAuth(true)
+      setIsNotAuth(true);
     }
-  }, [notAuth, triggerShowSignin, currentPath])
+  }, [notAuth, triggerShowSignin, currentPath]);
 
   useEffect(() => {
     if (token) {
       getCurrentUser(setAuth);
     }
-  }, [setAuth, token])
+  }, [setAuth, token]);
 
   const renderRedirect = () => {
     if (isNotAuth) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
-    return null
-  }
+    return null;
+  };
 
   return (
     <BrowserRouter>
@@ -53,7 +55,7 @@ const App = ({ setAuth, triggerShowSignin }) => {
         <Route component={Error} />
       </Switch>
     </BrowserRouter>
-  )
+  );
 };
 
 export default connect(null, mapDispatchToProps)(App);

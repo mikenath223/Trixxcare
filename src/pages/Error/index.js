@@ -5,7 +5,7 @@ import styles from './Error.module.css';
 const Error = () => (
   <div>
     <nav className={styles.navbar}>
-    <h2 data-testid="check-error-route">404 Error</h2>
+      <h2 data-testid="check-error-route">404 Error</h2>
       <Link to="/">
         <h2 className={styles.homeLink}>
           trixxcare

@@ -271,7 +271,6 @@ exports[`Landing page should match snapshot 1`] = `
            
           <br />
           <input
-            maxlength="10"
             name="username"
             required=""
             type="text"

@@ -7,12 +7,12 @@ import AliceCarousel from 'react-alice-carousel';
 import { SETDOCTORS, SETSIGNIN, SETLOGOUT } from 'store/actions/index';
 import { handleOpenMenu, setText, resizer } from 'utils/domlist';
 import { getCaregivers } from 'utils/request';
+import '../../../node_modules/react-alice-carousel/lib/alice-carousel.css';
 import SideBar from 'components/SideBar';
 import Footer from 'components/Footer';
-import style from './Dashboard.module.css';
 import Doctor from 'components/BoardItem';
 import Error from 'pages/Error';
-import '../../../node_modules/react-alice-carousel/lib/alice-carousel.css';
+import style from './Dashboard.module.css';
 
 
 const mapStateToProps = state => ({
@@ -36,11 +36,13 @@ const Dashboard = ({
   const [filterdocs, setfilterdocs] = useState('');
 
   useEffect(() => {
-    getCaregivers(setDocs, setIsLoaded, setErr, setText);
     if (docs.length > 0) {
+      setTimeout(setText, 0);
       return setIsLoaded(true);
     }
+    getCaregivers(setDocs, setIsLoaded, setErr, setText);
     resizer();
+
     return () => {
       setIsLoaded(false);
     };
@@ -110,42 +112,45 @@ const Dashboard = ({
     1024: { items: 3 },
   };
 
-  return <div className={style.container}>
-    <SideBar
-      auth={auth}
-      logged={logged}>
-      <Footer
-        handleLogout={handleLogout}
+  return (
+    <div className="container">
+      <SideBar
+        auth={auth}
         logged={logged}
-        handleConfirmed={handleConfirmed} />
-    </SideBar>
-    <div className={style.slideWrap}>
-      <div className={style.menuWrap} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleOpenMenu}>
-        <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
-      </div>
-      {!logged ? <div className={style.overlay} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleAuth}> </div> : null}
-      <input type="search" value={filterdocs} className={style.docsSearch} placeholder="Search Doctors" aria-label="Search" aria-describedby="basic-addon1" data-testid="entry" onChange={e => setfilterdocs(e.target.value)} />
-      <div className={style.intro}>
-        <p>Latest Caregivers</p>
-        <p>Please select a caregiver</p>
-      </div>
-      <AliceCarousel
-        slideToIndex={10}
-        responsive={resp}
-        autoPlayInterval={3200}
-        autoPlayDirection="ltr"
-        autoPlay
-        fadeOutAnimation
-        mouseTrackingEnabled
-        disableAutoPlayOnAction
-        dotsDisabled
       >
-        {
+        <Footer
+          handleLogout={handleLogout}
+          logged={logged}
+          handleConfirmed={handleConfirmed}
+        />
+      </SideBar>
+      <div className="slideWrap">
+        <div className={style.menuWrap} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleOpenMenu}>
+          <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
+        </div>
+        {!logged ? <div className={style.overlay} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleAuth}> </div> : null}
+        <input type="search" value={filterdocs} className={style.docsSearch} placeholder="Search Doctors" aria-label="Search" aria-describedby="basic-addon1" data-testid="entry" onChange={e => setfilterdocs(e.target.value)} />
+        <div className={style.intro}>
+          <p>Latest Caregivers</p>
+          <p>Please select a caregiver</p>
+        </div>
+        <AliceCarousel
+          slideToIndex={10}
+          responsive={resp}
+          autoPlayInterval={3200}
+          autoPlayDirection="ltr"
+          autoPlay
+          fadeOutAnimation
+          mouseTrackingEnabled
+          disableAutoPlayOnAction
+          dotsDisabled
+        >
+          {
           handleFilterDocs()
         }
-      </AliceCarousel>
-    </div>
-    {
+        </AliceCarousel>
+      </div>
+      {
       alert
         ? (
           <SweetAlert
@@ -159,10 +164,11 @@ const Dashboard = ({
             onCancel={handleCancel}
           >
             You must be signed in to complete this action, go to homepage.
-            </SweetAlert>
+          </SweetAlert>
         ) : null
     }
-  </div>
+    </div>
+  );
 };
 
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import style from './SideBar.module.css';
 import Logo from 'assets/images/logo.png';
 import { handleCloseMenu } from 'utils/domlist';
+import style from './SideBar.module.css';
 
 const SideBar = ({ auth, children, logged }) => (
-  <div className={style.sideBar + ' sideBar'}>
+  <div className={`${style.sideBar} sideBar`}>
     <div onClick={handleCloseMenu} role="button" tabIndex="1" onKeyDown={() => { }} className={`${style.closeWrap} ${style.menuWrap}`}>
       <img src="https://img.icons8.com/color/30/000000/close-window.png" className={style.closeMenu} alt="" />
     </div>
@@ -30,6 +30,6 @@ const SideBar = ({ auth, children, logged }) => (
     </div>
     {children}
   </div>
-)
+);
 
 export default SideBar;

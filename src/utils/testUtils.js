@@ -13,11 +13,19 @@ export const withReduxRendering = component => (
     </Provider>,
   ));
 
+export const withRouter = component => (
+  render(
+    <MemoryRouter>
+      {component}
+    </MemoryRouter>,
+  )
+);
+
 const withReduxRouter = component => (
   withReduxRendering(
     <MemoryRouter>
       {component}
-    </MemoryRouter>, document.createElement('div'),
+    </MemoryRouter>,
   ));
 
 export default withReduxRouter;

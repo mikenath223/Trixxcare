@@ -1,4 +1,4 @@
-import appoints from '../../reducers/appoint';
+import appoints from 'store/reducers/appoint';
 
 
 describe('Appoints Reducer', () => {

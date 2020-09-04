@@ -1,4 +1,4 @@
-import trigger from '../../reducers/triggerSingin';
+import trigger from 'store/reducers/triggerSingin';
 
 describe('Docs Reducer', () => {
   it('should return the initial state', () => {

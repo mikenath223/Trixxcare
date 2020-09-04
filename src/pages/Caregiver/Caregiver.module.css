@@ -1,17 +1,10 @@
-.container {
-  width: 99vw;
-  min-height: 99vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .containerLoad {
   width: 100vw;
-  background-color: #E5EFF1;
+  background-color: #e5eff1;
 }
 
-.setAppoint, .time {
+.setAppoint,
+.time {
   display: none;
 }
 
@@ -39,7 +32,8 @@
   min-height: 99vh;
 }
 
-.menuIcon, .closeMenu {
+.menuIcon,
+.closeMenu {
   display: none;
 }
 
@@ -58,7 +52,7 @@ button.request {
   width: 70%;
   color: #fff;
   box-shadow: 2px 3px 3px 2px rgba(240, 44, 60, 0.6);
-  background-color: #E40E0C;
+  background-color: #e40e0c;
   justify-content: space-around;
   border-radius: 15px;
 }
@@ -79,34 +73,64 @@ button.request:focus {
   padding: 5px;
 }
 
-.rightBar p:not(.dep p), .areas {
-  width: 100%;
-  word-spacing: 3px;
-  letter-spacing: 0.2px;
-}
-
 .rightBar p:first-child {
+  background-color: transparent;
   font-size: 30px;
   font-weight: 700;
   text-align: right;
 }
 
-.rightBar p:nth-child(n+2), .areas {
+.rightBar p:nth-child(n+3),
+.dep {
+  word-spacing: 10px;
+}
+
+.rightBar p:nth-child(n+2),
+.areas {
   font-weight: 600;
   font-size: 17px;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.rightBar p:nth-child(odd), .dep, .areas {
+.rightBar p:nth-child(odd),
+.dep,
+.areas {
   border: 2px dotted silver;
   padding: 10px 20px;
+}
+
+.rightBar p:nth-child(2) {
+  border: 2px solid #e59011;
+  padding: 10px;
+  width: auto;
+}
+
+.rightBar p:not(.dep p),
+.areas {
+  width: 100%;
+  word-spacing: 3px;
+  letter-spacing: 0.2px;
+}
+
+.areas span {
+  border: 2px solid rgb(231, 113, 16);
+  padding: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .locWrap {
   white-space: nowrap;
 }
 
-.rightBar .dep span, .location {
+.dep span {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.rightBar .dep span,
+.location {
   background-color: #000;
   color: #fff;
   padding: 5px;
@@ -125,35 +149,8 @@ button.request:focus {
   margin: 10px;
 }
 
-.rightBar p:first-child {
-  background-color: transparent;
-}
-
 .areas {
   text-align: center;
-}
-
-.areas span {
-  border: 2px solid rgb(231, 113, 16);
-  padding: 10px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-.rightBar p:nth-child(2) {
-  border: 2px solid #E59011;
-  padding: 10px;
-  width: auto;
-}
-
-.rightBar p:nth-child(n+3), .dep {
-  word-spacing: 10px;
-}
-
-.dep span {
-  display: block;
-  text-align: center;
-  margin-bottom: 5px;
 }
 
 .rightBar p.price {
@@ -203,19 +200,23 @@ button.request:focus {
   .slideWrap {
     width: 70%;
   }
+
   .sideBar {
     width: 30%;
   }
+
   .rightBar {
     height: 800px;
   }
 }
 
 @media (max-width: 810px) {
-  .rightBar p:nth-child(n+2), .areas {
+  .rightBar p:nth-child(n+2),
+  .areas {
     font-size: 14px;
     font-weight: 500;
   }
+
   button.request {
     font-size: 14px;
   }
@@ -225,20 +226,25 @@ button.request:focus {
   .slideWrap {
     width: 98%;
   }
-  .menuIcon, .closeMenu {
+
+  .menuIcon,
+  .closeMenu {
     display: initial;
     cursor: pointer;
   }
+
   .menuIcon {
     position: absolute;
     top: 10px;
     left: 10px;
   }
+
   .closeWrap {
     position: relative;
     left: -40%;
     top: 10px;
   }
+
   .sideBar {
     position: absolute;
     top: 0;
@@ -248,6 +254,7 @@ button.request:focus {
     background-color: #fff;
     display: none;
   }
+
   .rightBar {
     width: 65%;
   }
@@ -258,18 +265,22 @@ button.request:focus {
     padding-top: 20px;
     flex-direction: column;
   }
+
   .rightBar {
     width: 95%;
     margin: 40px auto;
     padding-right: 0;
   }
+
   button.request {
     font-size: 16px;
     width: 65%;
   }
+
   .areas {
     text-align: center;
   }
+
   .sideBar {
     width: 70%;
   }

@@ -1,4 +1,4 @@
-import { SETAPPOINT, DELAPPOINT } from '../../actions/index';
+import { SETAPPOINT, DELAPPOINT } from 'store/actions/index';
 
 
 describe('appointment creation', () => {

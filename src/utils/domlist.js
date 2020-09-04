@@ -20,7 +20,7 @@ const showSigninForm = () => {
   };
 };
 
-const hideForms = (e) => {
+const hideForms = e => {
   const modals = document.querySelectorAll('.modal');
   const forms = document.querySelectorAll('.form');
   modals.forEach(el => {
@@ -35,7 +35,7 @@ const hideForms = (e) => {
       });
     }
   });
-}
+};
 
 const showRegister = () => {
   const form = document.querySelector('.reg-form');

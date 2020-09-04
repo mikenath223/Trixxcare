@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should match snapshot 1`] = `
+<div>
+  <footer
+    class="sideFoot"
+  >
+    <button
+      tabindex="4"
+      type="button"
+    >
+      Sign In
+    </button>
+    <p>
+       
+      <a
+        href="https://github.com/mikenath223/trixxcare/issues"
+        rel="noopener noreferrer"
+        tabindex="5"
+        target="_blank"
+      >
+        Help
+      </a>
+    </p>
+    <p>
+      <img
+        alt=""
+        src="https://img.icons8.com/android/24/000000/twitter.png"
+      />
+      <img
+        alt=""
+        src="https://img.icons8.com/android/24/000000/facebook-new.png"
+      />
+      <img
+        alt=""
+        src="https://img.icons8.com/android/24/000000/google-plus.png"
+      />
+      <img
+        alt=""
+        src="https://img.icons8.com/material/24/000000/vimeo.png"
+      />
+      <img
+        alt=""
+        src="https://img.icons8.com/metro/24/000000/pinterest.png"
+      />
+    </p>
+  </footer>
+</div>
+`;

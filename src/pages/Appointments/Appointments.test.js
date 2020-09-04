@@ -1,5 +1,5 @@
 import React from 'react';
-import withReduxRouter from '../../utils/testUtils';
+import withReduxRouter from 'utils/testUtils';
 import Appointments from './index';
 
 describe('Appointments page', function () {

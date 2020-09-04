@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import PropTypes from 'prop-types';
-import { handleOpenMenu, resizer } from '../../utils/domlist';
+import { handleOpenMenu, resizer } from 'utils/domlist';
 import { getAppointments, deleteAppoints } from 'utils/request';
 import {
   SETAPPOINT, SETLOGOUT, DELAPPOINT,
@@ -12,7 +12,6 @@ import SideBar from 'components/SideBar';
 import Footer from 'components/Footer';
 import Error from 'pages/Error';
 import styles from './Appointments.module.css';
-import style from 'pages/Dashboard/Dashboard.module.css';
 
 
 const mapStateToProps = state => ({
@@ -34,19 +33,15 @@ const Appointments = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [alert, setAlert] = useState({ load: false, message: '', type: '' });
 
-  const history = useHistory()
+  const history = useHistory();
 
   const handleLogout = () => {
     setLogout();
     localStorage.removeItem('tok');
-    history.push('/')
+    history.push('/');
   };
 
-  const handleCancel = () => {
-    setAlert({ load: false, message: '' });
-  };
-
-  const handleConfirmed = () => {
+  const handleActions = () => {
     setAlert({ load: false, message: '' });
   };
 
@@ -56,13 +51,18 @@ const Appointments = ({
   };
 
   useEffect(() => {
+    if (appoints.length > 0) {
+      return setIsLoaded(true);
+    }
     if (localStorage.tok) {
       getAppointments(storeAppoints, setIsLoaded, setErr);
       resizer();
     }
 
-    return setIsLoaded(false);
-  }, [auth.user, storeAppoints]);
+    return () => {
+      setIsLoaded(false);
+    };
+  }, [appoints.length, auth.user, storeAppoints]);
 
 
   if (err) {
@@ -82,14 +82,16 @@ const Appointments = ({
   const logged = auth.isLogged || localStorage.tok;
 
   return (
-    <div className={`${style.container} ${styles.container}`}>
+    <div className={styles.container}>
       <SideBar
         auth={auth}
-        logged={logged}>
+        logged={logged}
+      >
         <Footer
           handleLogout={handleLogout}
           logged={logged}
-          handleConfirmed={handleConfirmed} />
+          handleConfirmed={handleActions}
+        />
       </SideBar>
 
       <div className={styles.mainBar}>
@@ -137,8 +139,8 @@ const Appointments = ({
               <SweetAlert
                 success
                 title={alert.message}
-                onConfirm={handleConfirmed}
-                onCancel={handleCancel}
+                onConfirm={handleActions}
+                onCancel={handleActions}
                 timeout={2000}
               />
             )
@@ -147,8 +149,8 @@ const Appointments = ({
             <SweetAlert
               error
               title={alert.message}
-              onConfirm={handleConfirmed}
-              onCancel={handleCancel}
+              onConfirm={handleActions}
+              onCancel={handleActions}
               timeout={3500}
             />
           ) : null}

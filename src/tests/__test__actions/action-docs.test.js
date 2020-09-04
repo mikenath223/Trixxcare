@@ -1,4 +1,4 @@
-import { SETDOCTORS, SETDOC } from '../../actions/index';
+import { SETDOCTORS, SETDOC } from 'store/actions/index';
 
 
 describe('doctor creation', () => {

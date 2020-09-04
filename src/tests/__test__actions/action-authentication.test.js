@@ -1,4 +1,4 @@
-import { SETLOGIN, SETLOGOUT, SETSIGNIN } from '../../actions/index';
+import { SETLOGIN, SETLOGOUT, SETSIGNIN } from 'store/actions/index';
 
 
 describe('appointment creation', () => {

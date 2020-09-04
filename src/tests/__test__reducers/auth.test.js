@@ -1,4 +1,4 @@
-import auth from '../../reducers/auth';
+import auth from 'store/reducers/auth';
 
 
 describe('Auth Reducer', () => {

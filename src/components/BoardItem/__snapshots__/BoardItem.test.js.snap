@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BoardItem should match snapshot 1`] = `
+<div>
+  <div>
+    <a
+      href="/doctors/John Doe-1"
+    >
+      <img
+        alt="doctor"
+        src="image"
+      />
+      <p>
+        John Doe
+      </p>
+      <p>
+        Orthopedic
+      </p>
+      <p>
+        <img
+          alt=""
+          src="https://img.icons8.com/carbon-copy/30/000000/facebook-circled.png"
+        />
+        <img
+          alt=""
+          src="https://img.icons8.com/wired/30/000000/twitter-circled.png"
+        />
+        <img
+          alt=""
+          src="https://img.icons8.com/carbon-copy/30/000000/filled-message.png"
+        />
+      </p>
+    </a>
+  </div>
+</div>
+`;

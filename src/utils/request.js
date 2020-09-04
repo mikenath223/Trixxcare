@@ -1,4 +1,4 @@
-/* 
+/*
 / Util function to get user token
 */
 export const getToken = (username, password, trigger,
@@ -10,8 +10,7 @@ export const getToken = (username, password, trigger,
   }))
     .then(res => {
       if (res.status === 201) {
-        res.json().then(token =>
-          saveToken(token, username, setAuth, trigger));
+        res.json().then(token => saveToken(token, username, setAuth, trigger));
       } else {
         setAlert(prevState => ({
           ...prevState,
@@ -23,20 +22,20 @@ export const getToken = (username, password, trigger,
     });
 };
 
-const params = (paramsBody) => ({
+const params = paramsBody => ({
   method: 'POST',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
   body: JSON.stringify(paramsBody),
-})
+});
 const saveToken = (token, username, setAuth, trigger) => {
   localStorage.setItem('tok', JSON.stringify(token.jwt));
   setAuth({ user: username, isLogged: true });
-  hideForms()
+  hideForms();
   trigger({ show: false });
-}
+};
 const hideForms = () => {
   const modals = document.querySelectorAll('.modal');
   const forms = document.querySelectorAll('.form');
@@ -50,10 +49,10 @@ const hideForms = () => {
     elem.style.visibility = 'hidden';
     return '';
   });
-}
+};
 
 
-/* 
+/*
 / Util function to register new user
 */
 export const registerUser = (username, password,
@@ -75,7 +74,7 @@ export const registerUser = (username, password,
       } else {
         getToken(username, password, trigger,
           setAuth, setAlert, setLoad);
-        setSigninCred({ username: '', password: '' })
+        setSigninCred({ username: '', password: '' });
       }
     })
     .catch(() => {
@@ -87,9 +86,9 @@ export const registerUser = (username, password,
       }));
       setLoad(false);
     });
-}
+};
 
-/* 
+/*
 / Util function to get current user
 */
 export const getCurrentUser = (setAuth, setAlert) => {
@@ -110,9 +109,9 @@ export const getCurrentUser = (setAuth, setAlert) => {
         load: true,
       }));
     });
-}
+};
 
-/* 
+/*
 / Util function to get caregivers
 */
 export const getCaregivers = (setDocs, setIsLoaded, setErr, setText) => {
@@ -131,9 +130,9 @@ export const getCaregivers = (setDocs, setIsLoaded, setErr, setText) => {
       setIsLoaded(true);
       setErr(true);
     });
-}
+};
 
-/* 
+/*
 / Util function to get all current user appointments
 */
 export const getAppointments = (setAppoints, setIsLoaded, setErr) => {
@@ -152,9 +151,9 @@ export const getAppointments = (setAppoints, setIsLoaded, setErr) => {
       setIsLoaded(true);
       setErr(true);
     });
-}
+};
 
-/* 
+/*
 / Util function to set appointments
 */
 export const setAppointment = (token, date, id, ret, setAlert,
@@ -182,8 +181,7 @@ export const setAppointment = (token, date, id, ret, setAlert,
           type: 'error',
         });
       });
-    }
-    else {
+    } else {
       setAlert({
         ...alert,
         message: 'Appointment created!',
@@ -204,9 +202,9 @@ export const setAppointment = (token, date, id, ret, setAlert,
       type: 'error',
     });
   });
-}
+};
 
-/* 
+/*
 / Util function to delete appointments
 */
 export const deleteAppoints = (appId, setAlert, delAppoints) => {
@@ -227,8 +225,7 @@ export const deleteAppoints = (appId, setAlert, delAppoints) => {
           type: 'error',
         }));
       });
-    }
-    else {
+    } else {
       delAppoints(appId);
       setAlert(prevState => ({
         ...prevState,
@@ -245,9 +242,9 @@ export const deleteAppoints = (appId, setAlert, delAppoints) => {
       type: 'error',
     }));
   });
-}
+};
 
-/* 
+/*
 / Util function to get single caregiver
 */
 export const getCaregiver = (id, setRet, setIsLoaded, setErr) => {
@@ -266,4 +263,4 @@ export const getCaregiver = (id, setRet, setIsLoaded, setErr) => {
       setIsLoaded(true);
       setErr(true);
     });
-}
+};

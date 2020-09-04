@@ -7,10 +7,12 @@ import SmartSlider from 'react-smart-slider';
 import { SETLOGIN, SETLOGOUT, SETSIGNIN } from 'store/actions';
 import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
-import { getToken, getCurrentUser, registerUser
+import {
+  getToken, getCurrentUser, registerUser,
 } from 'utils/request';
-import {showSignin, showRegister, slideHeight,
-} from 'utils/domlist'
+import {
+  showSignin, showRegister, slideHeight,
+} from 'utils/domlist';
 import style from './Landing.module.css';
 
 
@@ -37,7 +39,7 @@ const Landing = ({
     if (localStorage.tok) {
       getCurrentUser(setAuth, setAlert);
     }
-  }, [setAuth])
+  }, [setAuth]);
 
   useEffect(() => {
     if (trigger.show) {
@@ -124,7 +126,7 @@ const Landing = ({
 
 
   return (
-    <div className={style.container}>
+    <div className="container">
       {
         auth.isLogged
           ? (

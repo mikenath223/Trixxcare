@@ -6,7 +6,7 @@
 }
 
 .containerLoad {
-  background: #E5EFF1;
+  background: #e5eff1;
   align-items: center;
 }
 
@@ -17,7 +17,8 @@
   font-size: 30px;
 }
 
-.menuIcon, .closeMenu {
+.menuIcon,
+.closeMenu {
   display: none;
 }
 
@@ -48,7 +49,7 @@
   font-size: 18px;
 }
 
-.mainBar>h3 {
+.mainBar > h3 {
   font-size: 30px;
   color: #1a9afcfb;
   margin-bottom: 20px;
@@ -105,7 +106,7 @@
 .noApp a {
   border-radius: 10px;
   border: 2px solid gray;
-  background-color: #99C210;
+  background-color: #99c210;
   color: #fff;
   padding: 5px;
   margin: 7px;
@@ -113,41 +114,48 @@
 }
 
 @media (max-width: 770px) {
-  .sideBar {
-    display: none;
-  }
-  .container, .containerLoad {
+  .container,
+  .containerLoad {
     min-height: 100vh;
   }
+
   .appBar {
     margin-top: 0;
     padding-top: 10px;
     height: auto;
     overflow: initial;
   }
+
   .mainBar {
     margin-top: 30px;
     width: 95%;
     margin-bottom: 20px;
   }
+
   .delButton {
     font-size: 16px;
   }
-  .menuIcon, .closeMenu {
+
+  .menuIcon,
+  .closeMenu {
     display: initial;
     cursor: pointer;
   }
+
   .menuIcon {
     position: absolute;
     top: 10px;
     left: 10px;
   }
+
   .closeWrap {
     position: relative;
     left: -40%;
     top: 10px;
   }
+
   .sideBar {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -155,6 +163,7 @@
     width: 40%;
     background-color: #fff;
   }
+
   .rightBar {
     width: 65%;
   }
@@ -164,14 +173,17 @@
   .delButton {
     font-size: 13px;
   }
+
   .tableRow {
     flex-direction: column;
     margin-bottom: 10px;
   }
+
   .tableData {
     padding: 5px 0;
     justify-content: center;
   }
+
   .sideBar {
     width: 70%;
   }

@@ -5,16 +5,15 @@ import { Elements } from '@stripe/react-stripe-js';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import CheckoutForm from '../../components/Checkout';
 import { SETLOGOUT } from 'store/actions';
 import { handleOpenMenu, resizer } from 'utils/domlist';
 import { setAppointment, getCaregiver } from 'utils/request';
 import SideBar from 'components/SideBar';
 import Footer from 'components/Footer';
 import Error from 'pages/Error';
+import CheckoutForm from '../../components/Checkout';
 import style from './Caregiver.module.css';
 import 'react-calendar/dist/Calendar.css';
-import styles from 'pages/Dashboard/Dashboard.module.css';
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -42,8 +41,8 @@ const Caregiver = ({
   useEffect(() => {
     if (localStorage.tok) {
       getCaregiver(id, setRet, setIsLoaded, setErr);
-      };
-  }, [id])
+    }
+  }, [id]);
 
   useEffect(() => {
     if (docs.length > 0) {
@@ -65,7 +64,8 @@ const Caregiver = ({
   };
 
   const handleStripeCancel = () => {
-    setShowpay({...showPay,
+    setShowpay({
+      ...showPay,
       payForm: false,
     });
   };
@@ -77,7 +77,8 @@ const Caregiver = ({
   };
 
   const handleClick = () => {
-    setAlert({...alert,
+    setAlert({
+      ...alert,
       load: true,
       type: 'appoint',
     });
@@ -91,14 +92,15 @@ const Caregiver = ({
 
   const handleSetAppoint = () => {
     if (date.length >= 15) {
-      setAppointment(token, date, id, ret, setAlert, alert, 
+      setAppointment(token, date, id, ret, setAlert, alert,
         setShowpay, showPay, setDate);
     }
   };
 
   const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
   const handleShowPay = () => {
-    setShowpay({...showPay,
+    setShowpay({
+      ...showPay,
       payForm: true,
     });
   };
@@ -110,7 +112,7 @@ const Caregiver = ({
   }
   if (!isLoaded) {
     return (
-      <div className={`${style.containerLoad} ${style.container}`}>
+      <div className={`${style.containerLoad} container`}>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
       </div>
     );
@@ -119,17 +121,19 @@ const Caregiver = ({
   const logged = auth.isLogged || localStorage.tok;
 
   return (
-    <div className={`${styles.container} ${style.container}`}>
+    <div className={`${style.container} container`}>
       <h3 data-testid="check-home-route">Categories</h3>
       <SideBar
         auth={auth}
-        logged={logged}>
+        logged={logged}
+      >
         <Footer
           handleLogout={handleLogout}
-          logged={logged} />
+          logged={logged}
+        />
       </SideBar>
 
-      <div className={`${styles.slideWrap} ${style.slideWrap}`}>
+      <div className={`${style.slideWrap} slideWrap`}>
         <div className={style.imgWrap}>
           <div className={style.menuWrap} role="button" tabIndex="2" onKeyDown={() => {}} onClick={handleOpenMenu}>
             <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
@@ -286,7 +290,6 @@ Caregiver.propTypes = {
     isLogged: PropTypes.bool,
     user: PropTypes.string,
   }),
-  setAuth: PropTypes.func.isRequired,
   setLogout: PropTypes.func.isRequired,
 };
 

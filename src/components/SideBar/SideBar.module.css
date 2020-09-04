@@ -44,7 +44,7 @@
 }
 
 .midBar p:first-child {
-  background-color: #99C210;
+  background-color: #99c210;
   margin-bottom: 25px;
 }
 
@@ -58,30 +58,32 @@
   .sideBar {
     height: 99vh;
     display: none;
-  }
-  .slideWrap {
-    width: 100%;
-  }
-  .overlay {
-    left: 70px;
-    width: 75%;
-  }
-  .closeMenu {
-    display: initial;
-    cursor: pointer;
-  }
-  .closeWrap {
-    position: relative;
-    left: -40%;
-    top: 10px;
-  }
-  .sideBar {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 5;
     width: 40%;
     background-color: #fff;
+  }
+
+  .slideWrap {
+    width: 100%;
+  }
+
+  .overlay {
+    left: 70px;
+    width: 75%;
+  }
+
+  .closeMenu {
+    display: initial;
+    cursor: pointer;
+  }
+
+  .closeWrap {
+    position: relative;
+    left: -40%;
+    top: 10px;
   }
 }
 
