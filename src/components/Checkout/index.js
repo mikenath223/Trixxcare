@@ -26,7 +26,7 @@ const Checkout = ({ SweetAlert, handleCancel, handleConfirmed }) => {
 
   return (
     <form onSubmit={handleSubmit} className="stripe-form">
-      <p className="stripe-label">
+      <div className="stripe-label">
         <h2>Enter Card details</h2>
         <CardElement
           options={{
@@ -47,7 +47,7 @@ const Checkout = ({ SweetAlert, handleCancel, handleConfirmed }) => {
         <button type="submit" disabled={!stripe} className="stripe-button">
           Pay
         </button>
-      </p>
+      </div>
       {err.show ? (
         <SweetAlert
           error
