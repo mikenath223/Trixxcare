@@ -6,7 +6,7 @@ exports[`Footer should match snapshot 1`] = `
     class="sideFoot"
   >
     <button
-      tabindex="4"
+      tabindex="-4"
       type="button"
     >
       Sign In
@@ -16,7 +16,7 @@ exports[`Footer should match snapshot 1`] = `
       <a
         href="https://github.com/mikenath223/trixxcare/issues"
         rel="noopener noreferrer"
-        tabindex="5"
+        tabindex="-5"
         target="_blank"
       >
         Help

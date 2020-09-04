@@ -35,6 +35,7 @@ exports[`SideBar should match snapshot 1`] = `
       <p>
         <a
           href="/doctors"
+          tabindex="-1"
         >
           CAREGIVER
         </a>
