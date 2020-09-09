@@ -100,15 +100,10 @@ svg {
 }
 
 .btn {
-	display: inline-block;
 	text-align: center;
-	vertical-align: middle;
-	-webkit-user-select: none;
-	user-select: none;
 	background-color: transparent;
 	border: 1px solid transparent;
 	padding: .375rem .75rem;
-	line-height: 1.5;
 	border-radius: .25rem;
 	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
@@ -157,7 +152,30 @@ a {
 }
 
 h3[data-testid] {
-  display: none;
+	display: none;
+}
+
+.slideWrap {
+	width: 80%;
+	position: relative;
+}
+
+.container {
+	display: flex;
+	min-height: 99vh;
+	justify-content: center;
+	align-items: center;
+	background-color: #e5eff1;
+}
+
+.main-container {
+	background-color: unset;
+}
+
+@media (max-width: 770px) {
+  .slideWrap {
+    width: 95%;
+  }
 }
 
 @media (max-width: 380px) {

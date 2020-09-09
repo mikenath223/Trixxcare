@@ -17,13 +17,9 @@
   font-size: 30px;
 }
 
-.menuIcon,
+.menuWrap,
 .closeMenu {
   display: none;
-}
-
-.menuWrap {
-  width: min-content;
 }
 
 .midBar p:first-child {
@@ -114,11 +110,6 @@
 }
 
 @media (max-width: 770px) {
-  .container,
-  .containerLoad {
-    min-height: 100vh;
-  }
-
   .appBar {
     margin-top: 0;
     padding-top: 10px;
@@ -136,13 +127,13 @@
     font-size: 16px;
   }
 
-  .menuIcon,
+  .menuWrap,
   .closeMenu {
     display: initial;
     cursor: pointer;
   }
 
-  .menuIcon {
+  .menuWrap {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -154,18 +145,8 @@
     top: 10px;
   }
 
-  .sideBar {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    width: 40%;
-    background-color: #fff;
-  }
-
   .rightBar {
-    width: 65%;
+    width: 60%;
   }
 }
 
@@ -182,9 +163,5 @@
   .tableData {
     padding: 5px 0;
     justify-content: center;
-  }
-
-  .sideBar {
-    width: 70%;
   }
 }

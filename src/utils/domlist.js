@@ -91,7 +91,7 @@ const handleCloseMenu = () => {
 const resizer = () => {
   window.addEventListener('resize', () => {
     if (document.querySelector('.sideBar')) {
-      if (window.innerWidth >= 710) {
+      if (window.innerWidth >= 770) {
         document.querySelector('.sideBar').style.display = 'flex';
       } else {
         document.querySelector('.sideBar').style.display = 'none';

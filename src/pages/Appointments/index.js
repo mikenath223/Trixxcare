@@ -72,17 +72,17 @@ const Appointments = ({
   }
   if (!isLoaded) {
     return (
-      <div className={`${styles.containerLoad} ${styles.container}`}>
+      <div className='container'>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
         <h3 data-testid="check-appointment-route">Appointments</h3>
       </div>
     );
   }
 
-  const logged = auth.isLogged || localStorage.tok;
+  const logged = localStorage.tok;
 
   return (
-    <div className={styles.container}>
+    <div className='container main-container'>
       <SideBar
         auth={auth}
         logged={logged}
@@ -95,7 +95,7 @@ const Appointments = ({
       </SideBar>
 
       <div className={styles.mainBar}>
-        <div role="button" tabIndex="0" onKeyDown={() => { }} className={styles.menuWrap} onClick={handleOpenMenu}>
+        <div role="button" onKeyDown={() => { }} className={`${styles.menuWrap} btn`} onClick={handleOpenMenu}>
           <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={styles.menuIcon} />
         </div>
         <h3>Appointments</h3>

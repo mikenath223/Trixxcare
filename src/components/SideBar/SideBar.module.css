@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 20%;
+  width: 28%;
   align-items: center;
-  min-height: 99vh;
+  height: 100vh;
   box-shadow: 0 2px 2px 2px silver;
 }
 
@@ -54,7 +54,7 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 770px) {
   .sideBar {
     height: 99vh;
     display: none;
@@ -62,33 +62,24 @@
     top: 0;
     left: 0;
     z-index: 5;
-    width: 40%;
     background-color: #fff;
   }
-
-  .slideWrap {
-    width: 100%;
-  }
-
   .overlay {
     left: 70px;
     width: 75%;
   }
-
   .closeMenu {
     display: initial;
+    position: absolute;
     cursor: pointer;
-  }
-
-  .closeWrap {
-    position: relative;
-    left: -40%;
+    left: 5%;
     top: 10px;
   }
 }
 
 @media (max-width: 550px) {
   .sideBar {
-    width: 70%;
+    padding-top: 15%;
+    width: 60%;
   }
 }

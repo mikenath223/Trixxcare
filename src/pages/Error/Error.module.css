@@ -4,11 +4,8 @@
   height: auto;
 }
 
-.containerErr {
+.container {
   text-align: center;
-  position: relative;
-  width: 98vw;
-  height: 90vh;
 }
 
 .h1 {

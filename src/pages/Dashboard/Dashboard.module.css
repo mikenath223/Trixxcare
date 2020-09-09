@@ -1,21 +1,3 @@
-.containerLoad {
-  display: flex;
-  width: 99vw;
-  height: 99vh;
-  justify-content: center;
-  align-items: center;
-  background-color: #e5eff1;
-}
-
-.container-fluid {
-  background-color: #e5eff1;
-}
-
-:global .slideWrap {
-  width: 80%;
-  position: relative;
-}
-
 .overlay {
   position: absolute;
   height: 70%;
@@ -80,12 +62,8 @@
   color: gray;
 }
 
-.menuIcon {
-  display: none;
-}
-
 .menuWrap {
-  width: min-content;
+  display: none;
 }
 
 .docsSearch {
@@ -124,21 +102,17 @@
 }
 
 @media (max-width: 770px) {
-  :global .slideWrap {
-    width: 95%;
-  }
-
   .overlay {
     left: 70px;
     width: 75%;
   }
 
-  .menuIcon {
+  .menuWrap {
     display: initial;
     cursor: pointer;
     position: absolute;
     top: 21px;
-    left: 18px;
+    left: 10px;
   }
 }
 

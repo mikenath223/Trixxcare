@@ -11,7 +11,7 @@ import { setAppointment, getCaregiver } from 'utils/request';
 import SideBar from 'components/SideBar';
 import Footer from 'components/Footer';
 import Error from 'pages/Error';
-import CheckoutForm from '../../components/Checkout';
+import CheckoutForm from 'components/Checkout';
 import style from './Caregiver.module.css';
 import 'react-calendar/dist/Calendar.css';
 
@@ -84,6 +84,10 @@ const Caregiver = ({
     });
   };
 
+  const handleActions = () => {
+    setAlert({ load: false, message: '' });
+  };
+
   const handleTimeChange = e => {
     setDate(`${date.split(' ')[0]} ${e.target.value}`);
     document.querySelector('.createAppoint').disabled = false;
@@ -112,16 +116,16 @@ const Caregiver = ({
   }
   if (!isLoaded) {
     return (
-      <div className={`${style.containerLoad} container`}>
+      <div className='container'>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
       </div>
     );
   }
 
-  const logged = auth.isLogged || localStorage.tok;
+  const logged = localStorage.tok;
 
   return (
-    <div className={`${style.container} container`}>
+    <div className='container main-container'>
       <h3 data-testid="check-home-route">Categories</h3>
       <SideBar
         auth={auth}
@@ -129,13 +133,14 @@ const Caregiver = ({
       >
         <Footer
           handleLogout={handleLogout}
+          handleConfirmed={handleActions}
           logged={logged}
         />
       </SideBar>
 
       <div className={`${style.slideWrap} slideWrap`}>
         <div className={style.imgWrap}>
-          <button className={style.menuWrap} type="button" tabIndex="-6" onKeyDown={() => {}} onClick={handleOpenMenu}>
+          <button className={`${style.menuWrap} btn`} type="button" onKeyDown={() => {}} onClick={handleOpenMenu}>
             <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
           </button>
           <img src={ret.image} alt="doctor" />

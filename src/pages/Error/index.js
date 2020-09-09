@@ -12,7 +12,7 @@ const Error = () => (
         </h2>
       </Link>
     </nav>
-    <div className={styles.containers}>
+    <div className='container'>
       <img className={styles.image} src="https://blog.thomasnet.com/hs-fs/hubfs/shutterstock_774749455.jpg?width=900&name=shutterstock_774749455.jpg" alt=".." />
       <h1 data-testid="check-sor-route" className={styles.h1}>404 sor</h1>
       <Link to="/" className={styles.homeBut}><button className={styles.button} type="button">Go Home</button></Link>

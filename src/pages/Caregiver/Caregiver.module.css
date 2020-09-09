@@ -1,8 +1,3 @@
-.containerLoad {
-  width: 100vw;
-  background-color: #e5eff1;
-}
-
 .setAppoint,
 .time {
   display: none;
@@ -18,7 +13,7 @@
 
 .slideWrap {
   display: flex;
-  width: 80%;
+  width: 70%;
   justify-content: space-around;
 }
 
@@ -32,13 +27,9 @@
   min-height: 99vh;
 }
 
-.menuIcon,
+.menuWrap,
 .closeMenu {
   display: none;
-}
-
-.menuWrap {
-  width: min-content;
 }
 
 button.request {
@@ -230,16 +221,16 @@ button.request:focus {
     width: 95%;
   }
 
-  .menuIcon,
+  .menuWrap,
   .closeMenu {
     display: initial;
     cursor: pointer;
   }
 
-  .menuIcon {
+  .menuWrap {
     position: absolute;
     top: 21px;
-    left: 18px;
+    left: 10px;
   }
 
   .closeWrap {
@@ -259,7 +250,8 @@ button.request:focus {
   }
 
   .rightBar {
-    width: 65%;
+    margin: auto;
+    width: 94%;
   }
 }
 

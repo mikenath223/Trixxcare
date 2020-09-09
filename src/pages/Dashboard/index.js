@@ -7,13 +7,12 @@ import AliceCarousel from 'react-alice-carousel';
 import { SETDOCTORS, SETSIGNIN, SETLOGOUT } from 'store/actions/index';
 import { handleOpenMenu, setText, resizer } from 'utils/domlist';
 import { getCaregivers } from 'utils/request';
-import '../../../node_modules/react-alice-carousel/lib/alice-carousel.css';
+import 'react-alice-carousel/lib/alice-carousel.css';
 import SideBar from 'components/SideBar';
 import Footer from 'components/Footer';
 import Doctor from 'components/BoardItem';
 import Error from 'pages/Error';
 import style from './Dashboard.module.css';
-
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -25,7 +24,6 @@ const mapDispatchToProps = dispatch => ({
   triggerShowSignin: stat => dispatch(SETSIGNIN(stat)),
   setLogout: act => dispatch(SETLOGOUT(act)),
 });
-
 
 const Dashboard = ({
   auth, docs, setDocs, triggerShowSignin, setLogout,
@@ -92,7 +90,7 @@ const Dashboard = ({
     ));
   };
 
-  const logged = auth.isLogged || localStorage.tok;
+  const logged = localStorage.tok;
 
   if (err) {
     return (
@@ -101,7 +99,7 @@ const Dashboard = ({
   }
   if (!isLoaded) {
     return (
-      <div className={style.containerLoad}>
+      <div className='container'>
         <img src="https://www.ecoloxtech.com/images/giphycolor.gif" alt="" />
       </div>
     );
@@ -113,7 +111,7 @@ const Dashboard = ({
   };
 
   return (
-    <div className="container">
+    <div className="container main-container">
       <SideBar
         auth={auth}
         logged={logged}
@@ -125,7 +123,7 @@ const Dashboard = ({
         />
       </SideBar>
       <div className="slideWrap">
-        <div className={style.menuWrap} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleOpenMenu}>
+        <div className={`${style.menuWrap} btn`} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleOpenMenu}>
           <img src="https://img.icons8.com/android/24/000000/hamburger.png" alt="" className={style.menuIcon} />
         </div>
         {!logged ? <div className={style.overlay} role="button" tabIndex="0" onKeyDown={() => { }} onClick={handleAuth}> </div> : null}
