@@ -39,7 +39,7 @@ SideBar.propTypes = {
     user: PropTypes.string
   }).isRequired,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  logged: PropTypes.string.isRequired,
+  logged: PropTypes.string,
 };
 
 export default SideBar;

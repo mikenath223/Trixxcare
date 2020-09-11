@@ -143,9 +143,8 @@ const Dashboard = ({
           disableAutoPlayOnAction
           dotsDisabled
         >
-          {
-          handleFilterDocs()
-        }
+          {handleFilterDocs()}
+          
         </AliceCarousel>
       </div>
       {

@@ -78,13 +78,13 @@ table {
 }
 
 .alice-carousel__next-btn-item {
-	right: 0;
+	right: -60px;
 	transform: rotate(0.5turn);
 }
 
 .alice-carousel__prev-btn-item {
 	opacity: 0.6;
-	left: 0;
+	left: -60px;
 }
 
 svg {
@@ -156,7 +156,8 @@ h3[data-testid] {
 }
 
 .slideWrap {
-	width: 80%;
+	width: 73%;
+	padding: 0 60px;
 	position: relative;
 }
 
@@ -172,10 +173,32 @@ h3[data-testid] {
 	background-color: unset;
 }
 
-@media (max-width: 770px) {
+
+@media (max-width: 1200px) {
+	.slideWrap {
+		width: 65%;
+	}
+}
+
+@media (max-width: 950px) {
+	.slideWrap {
+		width: 60%;
+	}	
+}
+
+@media (max-width: 550px) {
   .slideWrap {
-    width: 95%;
-  }
+		padding: 0;
+		width: 95%;
+	}
+	
+	.alice-carousel__prev-btn-item {
+		left: 0;
+	}
+
+	.alice-carousel__next-btn-item {
+		right: 0;
+	}
 }
 
 @media (max-width: 380px) {

@@ -90,10 +90,6 @@
     width: 80%;
   }
 
-  .slideWrap {
-    width: 70%;
-  }
-
   .docsSearch {
     min-width: 27%;
     max-width: 60%;
@@ -120,5 +116,9 @@
   .overlay {
     left: 70px;
     width: 55%;
+  }
+
+  .menuWrap {
+    left: unset;
   }
 }

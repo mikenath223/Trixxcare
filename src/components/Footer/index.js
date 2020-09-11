@@ -22,7 +22,7 @@ const Footer = ({ handleLogout, logged, handleConfirmed }) => (
 
 Footer.propTypes = {
   handleLogout: PropTypes.func.isRequired,
-  logged: PropTypes.string.isRequired,
+  logged: PropTypes.string,
   handleConfirmed: PropTypes.func.isRequired,
 };
 

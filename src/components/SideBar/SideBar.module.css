@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 28%;
+  width: 32%;
   align-items: center;
   height: 100vh;
   box-shadow: 0 2px 2px 2px silver;
@@ -48,9 +48,15 @@
   margin-bottom: 25px;
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1200px) {
   .sideBar {
     width: 30%;
+  }
+}
+
+@media (max-width: 950px) {
+  .sideBar {
+    width: 33%;
   }
 }
 
