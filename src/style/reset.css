@@ -156,9 +156,8 @@ h3[data-testid] {
 }
 
 .slideWrap {
-	width: 73%;
+	width: 70%;
 	padding: 0 60px;
-	position: relative;
 }
 
 .container {
@@ -166,6 +165,7 @@ h3[data-testid] {
 	min-height: 99vh;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 	background-color: #e5eff1;
 }
 

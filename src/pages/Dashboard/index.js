@@ -133,7 +133,6 @@ const Dashboard = ({
           <p>Please select a caregiver</p>
         </div>
         <AliceCarousel
-          slideToIndex={10}
           responsive={resp}
           autoPlayInterval={3200}
           autoPlayDirection="ltr"
@@ -144,27 +143,27 @@ const Dashboard = ({
           dotsDisabled
         >
           {handleFilterDocs()}
-          
+
         </AliceCarousel>
       </div>
       {
-      alert
-        ? (
-          <SweetAlert
-            warning
-            showCancel
-            confirmBtnText="Sign In"
-            confirmBtnBsStyle="danger"
-            focusCancelBtn
-            title="Please Log In!"
-            onConfirm={handleConfirmed}
-            onCancel={handleCancel}
-          >
-            You must be signed in to complete this action, go to homepage.
+        alert
+          ? (
+            <SweetAlert
+              warning
+              showCancel
+              confirmBtnText="Sign In"
+              confirmBtnBsStyle="danger"
+              focusCancelBtn
+              title="Please Log In!"
+              onConfirm={handleConfirmed}
+              onCancel={handleCancel}
+            >
+              You must be signed in to complete this action, go to homepage.
           </SweetAlert>
-        ) : null
-    }
-    </div>
+          ) : null
+      }
+    </div >
   );
 };
 

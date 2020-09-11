@@ -14,6 +14,7 @@
 .slideWrap {
   display: flex;
   width: 70%;
+  padding: 0;
   justify-content: space-around;
 }
 
@@ -33,7 +34,6 @@
 }
 
 button.request {
-  text-shadow: 2px 2px 2px #000;
   font-weight: 800;
   font-size: 19px;
   letter-spacing: 1.5px;
@@ -110,8 +110,9 @@ button.request:focus {
   margin-bottom: 10px;
 }
 
-.locWrap {
-  white-space: nowrap;
+.locWrap span {
+  display: block;
+  margin-bottom: 10px;
 }
 
 .dep span {
@@ -198,6 +199,10 @@ button.request:focus {
 
   .rightBar {
     height: 800px;
+  }
+
+  button.request {
+    font-size: 14px;
   }
 }
 

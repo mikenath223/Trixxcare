@@ -1,8 +1,8 @@
 .overlay {
   position: absolute;
   height: 70%;
-  width: 85%;
-  left: 90px;
+  width: 65%;
+  right: 70px;
   bottom: 50px;
   z-index: 2;
   outline: none;
@@ -84,10 +84,9 @@
   outline: none;
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1024px) {
   .overlay {
-    left: 70px;
-    width: 80%;
+    right: 30px;
   }
 
   .docsSearch {
@@ -99,7 +98,7 @@
 
 @media (max-width: 770px) {
   .overlay {
-    left: 70px;
+    right: 40px;
     width: 75%;
   }
 
@@ -108,16 +107,11 @@
     cursor: pointer;
     position: absolute;
     top: 21px;
-    left: 10px;
+    right: 10px;
   }
 }
 
 @media (max-width: 450px) {
-  .overlay {
-    left: 70px;
-    width: 55%;
-  }
-
   .menuWrap {
     left: unset;
   }
