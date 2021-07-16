@@ -41,11 +41,11 @@
 .midBar p {
   height: 40px;
   line-height: 2;
+  margin-bottom: 1vh;
 }
 
-.midBar p:first-child {
+.midBar .activeTab {
   background-color: #99c210;
-  margin-bottom: 25px;
 }
 
 @media (max-width: 1200px) {
