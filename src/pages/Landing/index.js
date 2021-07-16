@@ -134,7 +134,7 @@ const Landing = ({
               <p>
                 <img src="https://img.icons8.com/windows/30/000000/user-male-circle.png" alt="" />
                 {' '}
-                {auth.user.substring(0, 7)}
+                {auth?.user?.substring(0, 7)}
               </p>
               <button type="button" className={`${style.float} ${style.app}`}>
                 {' '}
