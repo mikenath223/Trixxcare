@@ -86,6 +86,7 @@ const Appointments = ({
       <SideBar
         auth={auth}
         logged={logged}
+        currentPage='appointments'
       >
         <Footer
           handleLogout={handleLogout}

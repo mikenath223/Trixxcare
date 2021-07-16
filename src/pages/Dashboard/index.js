@@ -115,6 +115,7 @@ const Dashboard = ({
       <SideBar
         auth={auth}
         logged={logged}
+        currentPage='doctors'
       >
         <Footer
           handleLogout={handleLogout}

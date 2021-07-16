@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { handleCloseMenu } from 'utils/domlist';
 import PropTypes from 'prop-types';
 import Logo from 'assets/images/logo.png';
 import style from './SideBar.module.css';
 
-const SideBar = ({ auth, children, logged }) => {
-  const [activeTab, setActiveTab] = useState('caregiver')
+const SideBar = ({ auth, children, logged, currentPage }) => {
   
   return (
     <div className={`${style.sideBar} sideBar`}>
@@ -22,13 +21,13 @@ const SideBar = ({ auth, children, logged }) => {
         <img className={style.logo} src={Logo} alt="" />
       </Link>
       <div className={style.midBar}>
-        <p className={activeTab === 'caregiver' && style.activeTab} onClick={() => setActiveTab('caregiver')}>
-          <Link to="/doctors" tabIndex="-1">CAREGIVER</Link>
+        <p className={currentPage === 'doctors' && style.activeTab}>
+          <Link to="/doctors">CAREGIVER</Link>
         </p>
         {logged ? (
-          <p className={activeTab === 'appointments' && style.activeTab} onClick={() => setActiveTab('appointments')}>
+          <p className={currentPage === 'appointments' && style.activeTab}>
             {' '}
-            <Link to="/appointments" tabIndex="-2">APPOINTMENTS</Link>
+            <Link to="/appointments">APPOINTMENTS</Link>
           </p>
         ) : null}
       </div>
